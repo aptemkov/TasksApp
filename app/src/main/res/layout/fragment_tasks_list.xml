@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.TasksListFragment">
+    android:background="@color/back_primary_color"
+    tools:context=".presentation.taskslist.TasksListFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/Size1_5x"
+        android:layout_marginTop="@dimen/Size7x"
+        android:background="@color/back_secondary_color"
+        android:backgroundTint="@color/back_secondary_color"
+        android:clipToPadding="true"
+        app:cardCornerRadius="@dimen/Size1x"
+        app:cardElevation="@dimen/Size0_5x"
+        app:strokeWidth="@dimen/Size0">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tasks_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/new_task_fab"
         android:layout_width="@dimen/Size7x"
         android:layout_height="@dimen/Size7x"
+        android:layout_gravity="end|bottom"
         android:layout_marginEnd="@dimen/Size2x"
         android:layout_marginBottom="@dimen/Size5x"
         android:backgroundTint="@color/blue_color"
         android:contentDescription="@string/new_task_button"
         android:src="@drawable/ic_plus"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:tint="@color/white_color" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

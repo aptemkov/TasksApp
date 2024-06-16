@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/task_item_is_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/checkbox_icon"
+        android:layout_marginStart="@dimen/Size2x"
+        android:layout_marginTop="@dimen/Size1_5x"
+        android:layout_marginEnd="@dimen/Size1_5x"
+        android:src="@drawable/ic_checkbox_unselected" />
+
+    <ImageView
+        android:id="@+id/task_item_importance_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/importance_icon"
+        android:layout_marginStart="@dimen/Size0"
+        android:layout_marginTop="@dimen/Size1_75x"
+        android:layout_marginEnd="@dimen/Size0_5x"
+        android:src="@drawable/ic_important_task" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/Size0"
+        android:layout_marginTop="@dimen/Size1_75x"
+        android:layout_marginBottom="@dimen/Size1x"
+        android:layout_marginEnd="0dp">
+
+        <TextView
+            android:id="@+id/task_item_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/Size0_5x"
+            android:ellipsize="end"
+            android:maxLines="3"
+            tools:text="Description" />
+
+        <TextView
+            android:id="@+id/task_item_deadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Till 15.02.2024" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/task_item_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/info_icon"
+        android:layout_marginStart="@dimen/Size1_75x"
+        android:layout_marginTop="@dimen/Size1_75x"
+        android:layout_marginEnd="@dimen/Size2x"
+        android:src="@drawable/ic_info" />
+</LinearLayout>
+

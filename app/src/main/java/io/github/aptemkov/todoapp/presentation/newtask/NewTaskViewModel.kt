@@ -1,4 +1,4 @@
-package io.github.aptemkov.todoapp.presentation
+package io.github.aptemkov.todoapp.presentation.newtask
 
 import androidx.lifecycle.ViewModel
 

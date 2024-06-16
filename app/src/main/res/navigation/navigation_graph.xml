@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/tasksListFragment"
-        android:name="io.github.aptemkov.todoapp.presentation.TasksListFragment"
+        android:name="io.github.aptemkov.todoapp.presentation.taskslist.TasksListFragment"
         android:label="fragment_tasks_list"
         tools:layout="@layout/fragment_tasks_list" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/newTaskFragment"
-        android:name="io.github.aptemkov.todoapp.presentation.NewTaskFragment"
+        android:name="io.github.aptemkov.todoapp.presentation.newtask.NewTaskFragment"
         android:label="fragment_new_task"
         tools:layout="@layout/fragment_new_task" />
 </navigation>
