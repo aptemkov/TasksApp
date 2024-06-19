@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -76,7 +77,7 @@ fun TaskItem(
                 overflow = TextOverflow.Ellipsis,
             )
 
-            if(task.deadline != 0L) {
+            if (task.deadline != 0L) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     modifier = Modifier,

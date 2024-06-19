@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Я.Туду</string>
+    <string name="completed_tasks_description">Выполнено - %1$s</string>
+    <string name="show_hide_completed_tasks_button">Показать/скрыть выполненные задачи</string>
+    <string name="my_tasks_title">Мои дела</string>
+    <string name="new_task">Новая задача</string>
+</resources>

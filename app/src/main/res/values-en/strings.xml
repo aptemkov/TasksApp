@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">YaToDo</string>
+    <string name="app_name">Ya.Todo</string>
     <string name="completed_tasks_description">Completed - %1$s</string>
     <string name="show_hide_completed_tasks_button">Show/hide completed tasks</string>
     <string name="my_tasks_title">My tasks</string>
