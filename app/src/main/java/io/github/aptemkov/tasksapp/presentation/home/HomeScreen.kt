@@ -1,12 +1,9 @@
 package io.github.aptemkov.tasksapp.presentation.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,13 +14,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
-import io.github.aptemkov.tasksapp.domain.models.Priority
 import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
@@ -31,11 +26,12 @@ import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 @Composable
 fun HomeScreen(
     uiState: HomeScreenUiState,
-    onClick: (String, String) -> Unit,
+    changeVisibility: () -> Unit,
+    onItemClick: (String) -> Unit,
+    onNewTaskClick: () -> Unit,
 ) {
 
-    val scrollBehavior =
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         topBar = {
@@ -43,13 +39,14 @@ fun HomeScreen(
                 scrollBehavior = scrollBehavior,
                 completedTasksNumber = uiState.completedTasksNumber,
                 showCompletedTasks = uiState.showCompletedTasks,
+                changeVisibility = changeVisibility
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = TasksTheme.colorScheme.blue,
                 contentColor = TasksTheme.colorScheme.white,
-                onClick = { }
+                onClick = { onNewTaskClick() }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.icon_plus),
@@ -60,21 +57,37 @@ fun HomeScreen(
         containerColor = TasksTheme.colorScheme.backPrimary,
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
-        Card(
+        HomeScreenContent(
+            modifier = Modifier.padding(innerPadding),
+            tasksList = uiState.tasksListFiltered,
+            onItemClick = onItemClick,
+            onNewTaskClick = onNewTaskClick,
+        )
+    }
+}
+
+@Composable
+private fun HomeScreenContent(
+    modifier: Modifier,
+    tasksList: List<Task>,
+    onItemClick: (String) -> Unit,
+    onNewTaskClick: () -> Unit,
+) {
+    Card(
+        modifier = modifier.padding(horizontal = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = TasksTheme.colorScheme.backSecondary)
+    ) {
+        LazyColumn(
             modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 8.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-            colors = CardDefaults.cardColors(containerColor = TasksTheme.colorScheme.backSecondary)
+                .fillMaxWidth()
+                .padding(8.dp)
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                items(uiState.tasksList, key = { it.id }) { task ->
-                    TaskItem(task = task, onClick = { onClick(task.description, task.id) })
-                }
+            items(items = tasksList, key = { it.id }) { task ->
+                TaskItem(task = task, onClick = { onItemClick(task.id) })
+            }
+            item {
+                NewTaskItem(onNewTaskClick)
             }
         }
     }

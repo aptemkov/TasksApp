@@ -1,9 +1,10 @@
 package io.github.aptemkov.tasksapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,29 +17,31 @@ import io.github.aptemkov.tasksapp.presentation.task.TaskScreen
 fun TasksAppNavHost(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Home,
+        startDestination = HomeRoute,
     ) {
-        composable<Home> {
-            val viewModel: HomeScreenViewModel = viewModel()
-            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+        composable<HomeRoute> {
+            val viewModel: HomeScreenViewModel = hiltViewModel()
+            val uiState by viewModel.uiState.collectAsState()
             HomeScreen(
                 uiState = uiState,
-                onClick = { description, id ->
-                    navController.navigate(
-                        Task(
-                            description = description,
-                            id = id,
-                        )
-                    )
+                onItemClick = { id ->
+                    navController.navigate(TaskRoute(id = id))
+                },
+                changeVisibility = { viewModel.changeVisibility() },
+                onNewTaskClick = {
+                    navController.navigate(TaskRoute(null))
                 }
             )
         }
 
-        composable<Task> {
-            val args = it.toRoute<Task>()
+        composable<TaskRoute> {
+            val viewModel: HomeScreenViewModel = hiltViewModel()
+            val args = it.toRoute<TaskRoute>()
             TaskScreen(
-                description = args.description ?: "",
                 id = args.id,
+                onNewTaskAdd = { newTask ->
+                    viewModel.addTask(task = newTask)
+                }
             )
         }
     }

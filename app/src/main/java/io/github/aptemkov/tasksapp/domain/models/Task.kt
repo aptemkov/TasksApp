@@ -1,5 +1,8 @@
 package io.github.aptemkov.tasksapp.domain.models
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class Task(
     val id: String,
     val description: String,

@@ -1,5 +1,6 @@
 package io.github.aptemkov.tasksapp.presentation.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,6 +31,7 @@ fun HomeScreenCollapsingToolBar(
     scrollBehavior: TopAppBarScrollBehavior,
     completedTasksNumber: Int,
     showCompletedTasks: Boolean,
+    changeVisibility: () -> Unit,
 ) {
     val isCollapsed = remember { derivedStateOf { scrollBehavior.state.collapsedFraction > 0.5 } }
 
@@ -69,9 +71,12 @@ fun HomeScreenCollapsingToolBar(
                 Icon(
                     painter = painterResource(
                         id = if (showCompletedTasks)
-                            R.drawable.icon_status_visible else R.drawable.icon_state_not_visible
+                            R.drawable.icon_state_not_visible else R.drawable.icon_status_visible
                     ),
-                    contentDescription = stringResource(R.string.show_hide_completed_tasks_button)
+                    contentDescription = stringResource(R.string.show_hide_completed_tasks_button),
+                    modifier = Modifier.clickable {
+                        changeVisibility()
+                    }
                 )
             }
 

@@ -4,4 +4,16 @@
     <string name="show_hide_completed_tasks_button">Show/hide completed tasks</string>
     <string name="my_tasks_title">My tasks</string>
     <string name="new_task">New task</string>
+    <string name="close_button">Close button</string>
+    <string name="save">Save</string>
+    <string name="priority_low">Low</string>
+    <string name="priority_default">Default</string>
+    <string name="priority_high">High</string>
+    <string name="enter_description_placeholder">Describe task</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="priority">Priority</string>
+    <string name="deadline_text">Deadline</string>
+    <string name="delete_button">Delete button</string>
+    <string name="remove">Remove</string>
 </resources>

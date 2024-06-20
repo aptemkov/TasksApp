@@ -13,6 +13,7 @@ serialization = "1.6.3"
 lifecycleCompose = "2.8.2"
 ksp = "2.0.0-1.0.21"
 dagger = "2.51.1"
+hilt-navigation = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,6 +37,7 @@ dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref =
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 dagger-main = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
