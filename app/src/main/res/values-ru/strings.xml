@@ -17,4 +17,5 @@
     <string name="ok">ОК</string>
     <string name="delete_button">Кнопка удаления</string>
     <string name="remove">Удалить</string>
+    <string name="details">Детали</string>
 </resources>

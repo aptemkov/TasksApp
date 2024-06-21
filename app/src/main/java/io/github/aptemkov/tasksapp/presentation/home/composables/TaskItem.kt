@@ -1,6 +1,5 @@
-package io.github.aptemkov.tasksapp.presentation.home
+package io.github.aptemkov.tasksapp.presentation.home.composables
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,8 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,14 +29,15 @@ import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 @Composable
 fun TaskItem(
     task: Task,
-    onClick: (Task) -> Unit,
+    onClick: (String) -> Unit,
+    onDetailsClick: (String) -> Unit,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(TasksTheme.colorScheme.backSecondary)
             .focusable(true)
-            .clickable { onClick(task) }
+            .clickable { onClick(task.id) }
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.Center
     ) {
@@ -94,10 +92,13 @@ fun TaskItem(
         Spacer(modifier = Modifier.width(12.dp))
 
         Image(
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier
+                .size(24.dp)
+                .focusable(true)
+                .clickable { onDetailsClick(task.id) },
             painter = painterResource(id = R.drawable.icon_info),
             colorFilter = ColorFilter.tint(TasksTheme.colorScheme.labelTertiary),
-            contentDescription = ""
+            contentDescription = stringResource(R.string.details)
         )
     }
 }

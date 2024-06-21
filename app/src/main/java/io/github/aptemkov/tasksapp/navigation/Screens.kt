@@ -8,4 +8,5 @@ object HomeRoute
 @Serializable
 data class TaskRoute(
     val id: String?,
+    val isEdit: Boolean = false,
 )

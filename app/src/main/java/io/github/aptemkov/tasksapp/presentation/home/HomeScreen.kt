@@ -7,19 +7,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.domain.models.Task
+import io.github.aptemkov.tasksapp.presentation.home.composables.HomeFab
+import io.github.aptemkov.tasksapp.presentation.home.composables.HomeScreenCollapsingToolBar
+import io.github.aptemkov.tasksapp.presentation.home.composables.NewTaskItem
+import io.github.aptemkov.tasksapp.presentation.home.composables.TaskItem
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,6 +28,7 @@ fun HomeScreen(
     changeVisibility: () -> Unit,
     onItemClick: (String) -> Unit,
     onNewTaskClick: () -> Unit,
+    onDetailsClick: (String) -> Unit,
 ) {
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
@@ -43,16 +43,7 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                containerColor = TasksTheme.colorScheme.blue,
-                contentColor = TasksTheme.colorScheme.white,
-                onClick = { onNewTaskClick() }
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_plus),
-                    contentDescription = stringResource(R.string.new_task)
-                )
-            }
+            HomeFab(onNewTaskClick)
         },
         containerColor = TasksTheme.colorScheme.backPrimary,
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -62,6 +53,7 @@ fun HomeScreen(
             tasksList = uiState.tasksListFiltered,
             onItemClick = onItemClick,
             onNewTaskClick = onNewTaskClick,
+            onDetailsClick = onDetailsClick,
         )
     }
 }
@@ -72,6 +64,7 @@ private fun HomeScreenContent(
     tasksList: List<Task>,
     onItemClick: (String) -> Unit,
     onNewTaskClick: () -> Unit,
+    onDetailsClick: (String) -> Unit
 ) {
     Card(
         modifier = modifier.padding(horizontal = 8.dp),
@@ -84,7 +77,11 @@ private fun HomeScreenContent(
                 .padding(8.dp)
         ) {
             items(items = tasksList, key = { it.id }) { task ->
-                TaskItem(task = task, onClick = { onItemClick(task.id) })
+                TaskItem(
+                    task = task,
+                    onClick = { onItemClick(task.id) },
+                    onDetailsClick = { onDetailsClick(task.id) }
+                )
             }
             item {
                 NewTaskItem(onNewTaskClick)

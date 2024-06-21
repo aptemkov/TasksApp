@@ -16,4 +16,5 @@
     <string name="deadline_text">Deadline</string>
     <string name="delete_button">Delete button</string>
     <string name="remove">Remove</string>
+    <string name="details">Details</string>
 </resources>

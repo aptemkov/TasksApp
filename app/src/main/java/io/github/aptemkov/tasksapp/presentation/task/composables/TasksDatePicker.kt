@@ -1,4 +1,4 @@
-package io.github.aptemkov.tasksapp.presentation.task
+package io.github.aptemkov.tasksapp.presentation.task.composables
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
