@@ -31,7 +31,6 @@ fun HomeScreen(
     onNewTaskClick: () -> Unit,
     onDetailsClick: (String) -> Unit,
 ) {
-
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
@@ -76,11 +75,12 @@ private fun HomeScreenContent(
         colors = CardDefaults.cardColors(containerColor = TasksTheme.colorScheme.backSecondary)
     ) {
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+            modifier = Modifier.fillMaxWidth()
         ) {
-            items(items = tasksList, key = { it.id }) { task ->
+            items(
+                items = tasksList,
+                key = { it.id }
+            ) { task ->
                 TaskItem(
                     task = task,
                     onClick = onItemClick,

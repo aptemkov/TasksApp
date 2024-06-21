@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
@@ -47,6 +49,17 @@ fun TasksDatePicker(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Switch(checked = hasDeadLine, onCheckedChange = { onCheckedChanged(it) })
+        Switch(
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = TasksTheme.colorScheme.blue,
+                checkedTrackColor = TasksTheme.colorScheme.blue.copy(alpha = 0.3f),
+                uncheckedThumbColor = TasksTheme.colorScheme.backElevated,
+                uncheckedTrackColor = TasksTheme.colorScheme.grayLight.copy(alpha = 0.4f),
+                checkedBorderColor = Color.Transparent,
+                uncheckedBorderColor = Color.Transparent,
+            ),
+            checked = hasDeadLine,
+            onCheckedChange = { onCheckedChanged(it) }
+        )
     }
 }

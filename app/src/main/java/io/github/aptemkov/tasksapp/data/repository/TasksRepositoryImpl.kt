@@ -1,6 +1,5 @@
 package io.github.aptemkov.tasksapp.data.repository
 
-import android.util.Log
 import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
 import io.github.aptemkov.tasksapp.presentation.home.testList

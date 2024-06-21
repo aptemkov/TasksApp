@@ -68,6 +68,7 @@ fun HomeScreenCollapsingToolBar(
                     }
                 }
                 Icon(
+                    tint = TasksTheme.colorScheme.blue,
                     painter = painterResource(
                         id = if (showCompletedTasks)
                             R.drawable.icon_state_not_visible else R.drawable.icon_status_visible
@@ -78,7 +79,6 @@ fun HomeScreenCollapsingToolBar(
                     }
                 )
             }
-
         },
         colors = TopAppBarDefaults.largeTopAppBarColors(
             containerColor = TasksTheme.colorScheme.backPrimary,

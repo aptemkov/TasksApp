@@ -5,7 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.aptemkov.tasksapp.domain.models.Priority
 import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
-import io.github.aptemkov.tasksapp.presentation.home.HomeScreenUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
@@ -26,7 +25,7 @@ class TaskScreenViewModel @Inject constructor(
             description = uiState.value.description,
             priority = uiState.value.priority,
             deadline = uiState.value.deadLine,
-            isDone = false,
+            isDone = uiState.value.hasDeadLine,
             createDate = System.currentTimeMillis(),
             editDate = System.currentTimeMillis(),
         )

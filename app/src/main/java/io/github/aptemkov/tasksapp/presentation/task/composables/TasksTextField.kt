@@ -1,7 +1,9 @@
 package io.github.aptemkov.tasksapp.presentation.task.composables
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -9,7 +11,9 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
@@ -20,6 +24,8 @@ fun TasksTextField(
     isEditingEnabled: Boolean,
     onValueChange: (String) -> Unit,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -27,7 +33,7 @@ fun TasksTextField(
             readOnly = !isEditingEnabled,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(104.dp),
+                .heightIn(min = 104.dp, max = 300.dp),
             value = description,
             onValueChange = { onValueChange(it) },
             colors = TextFieldDefaults.colors(
@@ -45,6 +51,8 @@ fun TasksTextField(
                     color = TasksTheme.colorScheme.labelTertiary
                 )
             },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = {keyboardController?.hide()})
         )
     }
 }

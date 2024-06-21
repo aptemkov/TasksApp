@@ -68,7 +68,7 @@ fun TaskItem(
                     Priority.LOW -> painterResource(id = R.drawable.icon_unimportant)
                     else -> painterResource(id = R.drawable.icon_important)
                 },
-                contentDescription = "",
+                contentDescription = stringResource(id = R.string.priority),
             )
             Spacer(modifier = Modifier.width(4.dp))
         }

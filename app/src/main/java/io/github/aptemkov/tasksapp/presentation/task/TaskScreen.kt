@@ -1,6 +1,5 @@
 package io.github.aptemkov.tasksapp.presentation.task
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -115,7 +114,7 @@ fun TaskScreenContent(
             HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = 1.dp,
-                color = TasksTheme.colorScheme.backElevated
+                color = TasksTheme.colorScheme.supportSeparator
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -132,7 +131,7 @@ fun TaskScreenContent(
             HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = 1.dp,
-                color = TasksTheme.colorScheme.backElevated
+                color = TasksTheme.colorScheme.supportSeparator
             )
 
             Spacer(modifier = Modifier.height(12.dp))

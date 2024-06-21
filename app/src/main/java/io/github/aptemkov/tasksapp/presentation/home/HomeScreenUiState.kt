@@ -8,6 +8,6 @@ data class HomeScreenUiState(
 ) {
     val completedTasksNumber: Int = tasksList.count { it.isDone }
     val tasksListFiltered: List<Task> =
-        if (showCompletedTasks) tasksList.filter { it.isDone } else tasksList
+        if (showCompletedTasks) tasksList.filter { !it.isDone } else tasksList
 
 }
