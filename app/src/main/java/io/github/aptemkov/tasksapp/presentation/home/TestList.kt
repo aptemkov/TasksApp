@@ -4,7 +4,7 @@ import io.github.aptemkov.tasksapp.domain.models.Priority
 import io.github.aptemkov.tasksapp.domain.models.Task
 
 // Позже исправлю под нормальное хранение данных
-val testList = listOf(
+val testList = mutableListOf(
     Task(id = "1", description = "Задача 1", priority = Priority.LOW, deadline = 1L, isDone = false, createDate = 0L, editDate = 0L),
     Task(id = "2", description = "Задача 2", priority = Priority.LOW, deadline = 1L, isDone = true, createDate = 0L, editDate = 0L),
 

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,6 +35,9 @@ fun TasksAppNavHost(navController: NavHostController) {
                 onNewTaskClick = {
                     navController.navigate(TaskRoute(id = null, isEdit = false))
                 },
+                onChangeTaskIsDone = { id: String, isDone: Boolean ->
+                    viewModel.changeTaskIsDone(id = id, isDone = isDone)
+                },
                 changeVisibility = { viewModel.changeVisibility() },
             )
         }
@@ -41,15 +45,32 @@ fun TasksAppNavHost(navController: NavHostController) {
         composable<TaskRoute> {
             val viewModel: TaskScreenViewModel = hiltViewModel()
             val args = it.toRoute<TaskRoute>()
-            val isEdit = args.isEdit
-            val id = args.id
-
-            val argument = getTaskScreenArgument(id = id, isEdit = isEdit)
+            val argument = getTaskScreenArgument(id = args.id, isEdit = args.isEdit)
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
             TaskScreen(
+                uiState = uiState,
                 tasksScreenArgument = argument,
-                onNewTaskAdd = { newTask ->
-                    viewModel.addTask(task = newTask)
+                onNewTaskAdd = {
+                    viewModel.addTask()
+                },
+                onRemoveTask = {
+                    viewModel.removeTask()
+                },
+                onLoadTask = { taskId ->
+                    viewModel.loadTask(id = taskId, isEdit = args.isEdit)
+                },
+                onDescriptionChange = { description ->
+                    viewModel.changeDescription(description)
+                },
+                onPriorityChange = { priority ->
+                    viewModel.changePriority(priority)
+                },
+                onDeadLineChange = { deadLine ->
+                    viewModel.changeDeadLine(deadLine)
+                },
+                onHasDeadLineChange = { hasDeadLine ->
+                    viewModel.changeHasDeadLine(hasDeadLine)
                 },
                 onBack = {
                     navController.popBackStack()

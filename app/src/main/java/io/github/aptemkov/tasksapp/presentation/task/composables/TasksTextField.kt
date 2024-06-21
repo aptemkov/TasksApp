@@ -15,11 +15,16 @@ import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @Composable
-fun TasksTextField(description: String, onValueChange: (String) -> Unit) {
+fun TasksTextField(
+    description: String,
+    isEditingEnabled: Boolean,
+    onValueChange: (String) -> Unit,
+) {
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
         OutlinedTextField(
+            readOnly = !isEditingEnabled,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(104.dp),

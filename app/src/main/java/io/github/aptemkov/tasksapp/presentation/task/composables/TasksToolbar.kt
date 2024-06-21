@@ -23,7 +23,7 @@ import kotlin.random.Random
 @Composable
 fun TasksToolbar(
     onBack: () -> Unit,
-    onNewTaskAdd: (Task) -> Unit
+    onNewTaskAdd: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -48,17 +48,22 @@ fun TasksToolbar(
             modifier = Modifier
                 .focusable()
                 .clickable {
-                    val random = Random.nextInt()
-                    onNewTaskAdd(
-                        Task(
-                            id = "$random",
-                            description = "descr $random",
-                            priority = Priority.DEFAULT,
-                            deadline = 1L,
-                            isDone = Random.nextBoolean(),
-                        )
-                    )
+                    onNewTaskAdd()
+                    onBack()
                 }
         )
     }
 }
+
+/*
+val random = Random.nextInt()
+onNewTaskAdd(
+    Task(
+        id = "$random",
+        description = "descr $random",
+        priority = Priority.DEFAULT,
+        deadline = 1L,
+        isDone = Random.nextBoolean(),
+    )
+)
+ */

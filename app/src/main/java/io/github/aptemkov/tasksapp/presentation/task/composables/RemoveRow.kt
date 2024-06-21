@@ -1,5 +1,7 @@
 package io.github.aptemkov.tasksapp.presentation.task.composables
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,10 +19,15 @@ import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @Composable
-fun RemoveRow(isEnabled: Boolean = false) {
+fun RemoveRow(
+    isEnabled: Boolean = false,
+    onRemoveTask: () -> Unit,
+) {
     val color = if (isEnabled) TasksTheme.colorScheme.red else TasksTheme.colorScheme.grayLight
     Row(
         modifier = Modifier
+            .focusable(isEnabled)
+            .clickable { if(isEnabled) onRemoveTask() }
             .fillMaxWidth()
             .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically

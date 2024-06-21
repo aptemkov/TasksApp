@@ -1,5 +1,6 @@
 package io.github.aptemkov.tasksapp.data.repository
 
+import android.util.Log
 import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
 import io.github.aptemkov.tasksapp.presentation.home.testList
@@ -20,8 +21,26 @@ class TasksRepositoryImpl @Inject constructor(): TasksRepository {
         return task
     }
 
-    override fun addTask(task: Task): Boolean {
-        _tasks.add(index = 0, element = task)
+    override fun removeTaskById(id: String): Boolean {
+        _tasks.removeAll { it.id == id }
         return true
     }
+
+    override fun addTask(task: Task): Boolean {
+        val prevTaskId = _tasks.indexOfFirst { it.id == task.id }
+
+        if(prevTaskId != -1) {
+            _tasks[prevTaskId] = task
+        } else {
+            _tasks.add(index = 0, element = task)
+        }
+
+        return true
+    }
+
+    override fun changeTaskDone(taskId: String, isDone: Boolean) {
+        val index = _tasks.indexOfFirst { it.id == taskId }
+        _tasks[index] = _tasks[index].copy(isDone = isDone)
+    }
+
 }

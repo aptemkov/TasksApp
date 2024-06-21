@@ -27,11 +27,13 @@ fun HomeScreen(
     uiState: HomeScreenUiState,
     changeVisibility: () -> Unit,
     onItemClick: (String) -> Unit,
+    onChangeTaskIsDone: (String, Boolean) -> Unit,
     onNewTaskClick: () -> Unit,
     onDetailsClick: (String) -> Unit,
 ) {
 
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val scrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         topBar = {
@@ -54,6 +56,7 @@ fun HomeScreen(
             onItemClick = onItemClick,
             onNewTaskClick = onNewTaskClick,
             onDetailsClick = onDetailsClick,
+            onChangeTaskIsDone = onChangeTaskIsDone,
         )
     }
 }
@@ -64,7 +67,8 @@ private fun HomeScreenContent(
     tasksList: List<Task>,
     onItemClick: (String) -> Unit,
     onNewTaskClick: () -> Unit,
-    onDetailsClick: (String) -> Unit
+    onDetailsClick: (String) -> Unit,
+    onChangeTaskIsDone: (String, Boolean) -> Unit,
 ) {
     Card(
         modifier = modifier.padding(horizontal = 8.dp),
@@ -79,8 +83,9 @@ private fun HomeScreenContent(
             items(items = tasksList, key = { it.id }) { task ->
                 TaskItem(
                     task = task,
-                    onClick = { onItemClick(task.id) },
-                    onDetailsClick = { onDetailsClick(task.id) }
+                    onClick = onItemClick,
+                    onDetailsClick = onDetailsClick,
+                    onChangeTaskIsDone = onChangeTaskIsDone
                 )
             }
             item {

@@ -18,4 +18,6 @@
     <string name="delete_button">Кнопка удаления</string>
     <string name="remove">Удалить</string>
     <string name="details">Детали</string>
+    <string name="is_task_done">Задача сделана</string>
+    <string name="deadline_till">До %1$s</string>
 </resources>

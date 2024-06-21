@@ -20,3 +20,11 @@ fun getTaskScreenArgument(id: String?, isEdit: Boolean) =
     } else {
         TasksScreenArgument.TaskNew
     }
+
+fun TasksScreenArgument.getId(): String? {
+    var id: String? = null
+    if (this is TasksScreenArgument.TaskEdit) id = this.id
+    else if (this is TasksScreenArgument.TaskDetails) id = this.id
+
+    return id
+}

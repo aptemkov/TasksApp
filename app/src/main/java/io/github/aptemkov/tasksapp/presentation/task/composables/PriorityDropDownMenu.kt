@@ -27,9 +27,11 @@ import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 @Composable
 fun PriorityDropDownMenu(
     modifier: Modifier = Modifier,
+    selectedPriority: Priority,
+    isEditingEnabled: Boolean,
+    onPriorityChange: (Priority) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selected by remember { mutableStateOf(Priority.DEFAULT) }
 
     Column(
         modifier = modifier
@@ -46,7 +48,7 @@ fun PriorityDropDownMenu(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = selected.textName,
+            text = selectedPriority.textName,
             style = TasksTheme.typography.body,
             color = TasksTheme.colorScheme.labelTertiary
         )
@@ -77,7 +79,9 @@ fun PriorityDropDownMenu(
                         )
                     },
                     onClick = {
-                        selected = priority
+                        if(isEditingEnabled) {
+                            onPriorityChange(priority)
+                        }
                         expanded = false
                     }
                 )

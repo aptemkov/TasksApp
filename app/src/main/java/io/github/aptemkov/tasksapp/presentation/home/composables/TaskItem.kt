@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.domain.models.Priority
 import io.github.aptemkov.tasksapp.domain.models.Task
+import io.github.aptemkov.tasksapp.domain.models.toDateString
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @Composable
@@ -31,6 +32,7 @@ fun TaskItem(
     task: Task,
     onClick: (String) -> Unit,
     onDetailsClick: (String) -> Unit,
+    onChangeTaskIsDone: (String, Boolean) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -42,7 +44,11 @@ fun TaskItem(
         horizontalArrangement = Arrangement.Center
     ) {
         Image(
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier
+                .size(24.dp)
+                .clickable {
+                    onChangeTaskIsDone(task.id, !task.isDone)
+                },
             painter = when (task.isDone) {
                 true -> painterResource(id = R.drawable.icon_checked)
                 false -> {
@@ -50,7 +56,7 @@ fun TaskItem(
                     else painterResource(id = R.drawable.icon_unchecked)
                 }
             },
-            contentDescription = "",
+            contentDescription = stringResource(R.string.is_task_done),
         )
 
         Spacer(modifier = Modifier.width(12.dp))
@@ -81,7 +87,7 @@ fun TaskItem(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     modifier = Modifier,
-                    text = "До 16.07.2023",
+                    text = stringResource(R.string.deadline_till, task.deadline.toDateString()),
                     color = TasksTheme.colorScheme.labelTertiary,
                     style = TasksTheme.typography.subhead,
                     maxLines = 1,

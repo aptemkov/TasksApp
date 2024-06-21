@@ -9,6 +9,10 @@ interface TasksRepository {
 
     fun getTaskById(id: String): Task?
 
+    fun removeTaskById(id: String): Boolean
+
     fun addTask(task: Task): Boolean
+
+    fun changeTaskDone(taskId: String, isDone: Boolean)
 
 }

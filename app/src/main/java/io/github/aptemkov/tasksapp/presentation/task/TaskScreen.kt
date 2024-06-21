@@ -16,13 +16,12 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.github.aptemkov.tasksapp.domain.models.Task
+import io.github.aptemkov.tasksapp.domain.models.Priority
 import io.github.aptemkov.tasksapp.presentation.task.composables.PriorityDropDownMenu
 import io.github.aptemkov.tasksapp.presentation.task.composables.RemoveRow
 import io.github.aptemkov.tasksapp.presentation.task.composables.TasksDatePicker
@@ -33,8 +32,15 @@ import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @Composable
 fun TaskScreen(
+    uiState: TaskScreenUiState,
     tasksScreenArgument: TasksScreenArgument,
-    onNewTaskAdd: (Task) -> Unit,
+    onDescriptionChange: (String) -> Unit,
+    onPriorityChange: (Priority) -> Unit,
+    onDeadLineChange: (Long) -> Unit,
+    onHasDeadLineChange: (Boolean) -> Unit,
+    onNewTaskAdd: () -> Unit,
+    onRemoveTask: () -> Unit,
+    onLoadTask: (id: String) -> Unit,
     onBack: () -> Unit,
 ) {
     Scaffold(
@@ -44,7 +50,15 @@ fun TaskScreen(
     ) { innerPadding ->
         TaskScreenContent(
             modifier = Modifier.padding(innerPadding),
+            uiState = uiState,
             tasksScreenArgument = tasksScreenArgument,
+            onLoadTask = onLoadTask,
+            onRemoveTask = onRemoveTask,
+            onDescriptionChange = onDescriptionChange,
+            onPriorityChange = onPriorityChange,
+            onDeadLineChange = onDeadLineChange,
+            onHasDeadLineChange = onHasDeadLineChange,
+            onBack = onBack,
         )
     }
 }
@@ -53,34 +67,50 @@ fun TaskScreen(
 @Composable
 fun TaskScreenContent(
     modifier: Modifier,
+    uiState: TaskScreenUiState,
     tasksScreenArgument: TasksScreenArgument,
+    onLoadTask: (String) -> Unit,
+    onRemoveTask: () -> Unit,
+    onDescriptionChange: (String) -> Unit,
+    onPriorityChange: (Priority) -> Unit,
+    onDeadLineChange: (Long) -> Unit,
+    onHasDeadLineChange: (Boolean) -> Unit,
+    onBack: () -> Unit,
 ) {
-    var description by rememberSaveable { mutableStateOf("") }
-    var deadline by rememberSaveable { mutableLongStateOf(0L) }
-    var checked by rememberSaveable { mutableStateOf(false) }
+    var showDatePicker by rememberSaveable { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
-    val isDeleteRowEnabled = tasksScreenArgument !is TasksScreenArgument.TaskNew
+    val isTaskLoaded = tasksScreenArgument !is TasksScreenArgument.TaskNew
+    val isEditingEnabled = tasksScreenArgument !is TasksScreenArgument.TaskDetails
 
     LaunchedEffect(Unit) {
-        Log.i("TestTest", "TaskScreenContent: $tasksScreenArgument")
+        if(isTaskLoaded) {
+            val id = tasksScreenArgument.getId()
+            id?.let {
+                onLoadTask(it)
+            }
+        }
     }
 
-    Box() {
+    Box {
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .background(TasksTheme.colorScheme.backPrimary)
                 .padding(16.dp)
         ) {
-
             TasksTextField(
-                description = description,
-                onValueChange = { description = it }
+                description = uiState.description,
+                isEditingEnabled = isEditingEnabled,
+                onValueChange = { onDescriptionChange(it) }
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            PriorityDropDownMenu()
+            PriorityDropDownMenu(
+                selectedPriority = uiState.priority,
+                isEditingEnabled = isEditingEnabled,
+                onPriorityChange = onPriorityChange,
+            )
 
             HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
@@ -90,7 +120,14 @@ fun TaskScreenContent(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            TasksDatePicker(checked = checked, onCheckedChanged = { checked = it })
+            TasksDatePicker(
+                hasDeadLine = uiState.hasDeadLine,
+                deadLine = uiState.deadLine,
+                onCheckedChanged = {
+                    onHasDeadLineChange(it)
+                    showDatePicker = it
+                }
+            )
 
             HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
@@ -100,18 +137,24 @@ fun TaskScreenContent(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            RemoveRow(isEnabled = isDeleteRowEnabled)
+            RemoveRow(
+                isEnabled = isTaskLoaded,
+                onRemoveTask = {
+                    onRemoveTask()
+                    onBack()
+                }
+            )
 
         }
-        if (checked) {
+        if (showDatePicker) {
             TasksDatePickerDialog(
                 datePickerState = datePickerState,
                 onDismissRequest = {
-                    checked = false
+                    showDatePicker = false
                 },
                 onConfirmButton = {
-                    deadline = datePickerState.selectedDateMillis ?: 0L
-                    checked = false
+                    onDeadLineChange(datePickerState.selectedDateMillis ?: 0L)
+                    showDatePicker = false
                 },
             )
         }

@@ -41,6 +41,10 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    fun changeTaskIsDone(id: String, isDone: Boolean) {
+        repository.changeTaskDone(taskId = id, isDone = isDone)
+    }
+
     fun changeVisibility() {
         _uiState.value = uiState.value.copy(
             showCompletedTasks = !uiState.value.showCompletedTasks

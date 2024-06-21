@@ -17,4 +17,6 @@
     <string name="delete_button">Delete button</string>
     <string name="remove">Remove</string>
     <string name="details">Details</string>
+    <string name="is_task_done">Is task done</string>
+    <string name="deadline_till">До %1$s</string>
 </resources>
