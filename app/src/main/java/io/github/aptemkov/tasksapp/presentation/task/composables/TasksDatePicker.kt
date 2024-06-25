@@ -1,5 +1,6 @@
 package io.github.aptemkov.tasksapp.presentation.task.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +24,8 @@ import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 fun TasksDatePicker(
     hasDeadLine: Boolean,
     deadLine: Long,
-    onCheckedChanged: (Boolean) -> Unit
+    onCheckedChanged: (Boolean) -> Unit,
+    onDeadLineClicked: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -31,7 +33,9 @@ fun TasksDatePicker(
             .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column {
+        Column(
+            modifier = Modifier.clickable { onDeadLineClicked() }
+        ) {
             Text(
                 text = stringResource(R.string.deadline_text),
                 style = TasksTheme.typography.body,

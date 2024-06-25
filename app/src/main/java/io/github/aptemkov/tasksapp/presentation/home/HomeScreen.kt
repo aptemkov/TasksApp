@@ -1,5 +1,6 @@
 package io.github.aptemkov.tasksapp.presentation.home
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,7 +71,7 @@ private fun HomeScreenContent(
     onChangeTaskIsDone: (String, Boolean) -> Unit,
 ) {
     Card(
-        modifier = modifier.padding(horizontal = 8.dp),
+        modifier = modifier.padding(horizontal = 8.dp).fillMaxSize(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(containerColor = TasksTheme.colorScheme.backSecondary)
     ) {
@@ -82,6 +83,7 @@ private fun HomeScreenContent(
                 key = { it.id }
             ) { task ->
                 TaskItem(
+                    modifier = Modifier.animateItem(),
                     task = task,
                     onClick = onItemClick,
                     onDetailsClick = onDetailsClick,

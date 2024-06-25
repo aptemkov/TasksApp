@@ -54,13 +54,13 @@ fun PriorityDropDownMenu(
         )
 
         DropdownMenu(
-            modifier = Modifier.background(TasksTheme.colorScheme.grayLight),
+            modifier = Modifier.background(TasksTheme.colorScheme.backElevated),
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
             Priority.entries.forEach { priority ->
                 DropdownMenuItem(
-                    modifier = Modifier.background(TasksTheme.colorScheme.grayLight),
+                    modifier = Modifier.background(TasksTheme.colorScheme.backElevated),
                     leadingIcon = {
                         if (priority == Priority.HIGH) {
                             Icon(

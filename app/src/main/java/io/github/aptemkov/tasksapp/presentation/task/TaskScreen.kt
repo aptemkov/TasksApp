@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
@@ -44,7 +46,15 @@ fun TaskScreen(
 ) {
     Scaffold(
         topBar = {
-            TasksToolbar(onBack, onNewTaskAdd)
+            TasksToolbar(
+                onBack = onBack,
+                onNewTaskAdd = {
+                    onNewTaskAdd()
+                    if(uiState.description.isNotBlank()) {
+                        onBack()
+                    }
+                }
+            )
         },
     ) { innerPadding ->
         TaskScreenContent(
@@ -77,7 +87,7 @@ fun TaskScreenContent(
     onBack: () -> Unit,
 ) {
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
-    val datePickerState = rememberDatePickerState()
+    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
     val isTaskLoaded = tasksScreenArgument !is TasksScreenArgument.TaskNew
     val isEditingEnabled = tasksScreenArgument !is TasksScreenArgument.TaskDetails
 
@@ -96,10 +106,12 @@ fun TaskScreenContent(
                 .fillMaxSize()
                 .background(TasksTheme.colorScheme.backPrimary)
                 .padding(16.dp)
+                .verticalScroll(state = rememberScrollState()),
         ) {
             TasksTextField(
                 description = uiState.description,
                 isEditingEnabled = isEditingEnabled,
+                isError = uiState.isDescriptionError,
                 onValueChange = { onDescriptionChange(it) }
             )
 
@@ -123,8 +135,15 @@ fun TaskScreenContent(
                 hasDeadLine = uiState.hasDeadLine,
                 deadLine = uiState.deadLine,
                 onCheckedChanged = {
-                    onHasDeadLineChange(it)
-                    showDatePicker = it
+                    if(isEditingEnabled) {
+                        onHasDeadLineChange(it)
+                        showDatePicker = it
+                    }
+                },
+                onDeadLineClicked = {
+                    if(uiState.hasDeadLine) {
+                        showDatePicker = true
+                    }
                 }
             )
 
@@ -149,6 +168,7 @@ fun TaskScreenContent(
             TasksDatePickerDialog(
                 datePickerState = datePickerState,
                 onDismissRequest = {
+                    onDeadLineChange(datePickerState.selectedDateMillis ?: 0L)
                     showDatePicker = false
                 },
                 onConfirmButton = {

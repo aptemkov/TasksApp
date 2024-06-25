@@ -20,4 +20,5 @@
     <string name="details">Детали</string>
     <string name="is_task_done">Задача сделана</string>
     <string name="deadline_till">До %1$s</string>
+    <string name="text_field_error">Ошибка текстового поля</string>
 </resources>

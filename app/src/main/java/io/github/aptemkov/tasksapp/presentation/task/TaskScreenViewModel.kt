@@ -18,15 +18,25 @@ class TaskScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(TaskScreenUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun addTask() {
+    fun saveTask() {
+        if(uiState.value.description.isBlank()) {
+            _uiState.value = uiState.value.copy(
+                isDescriptionError = true,
+            )
+        } else {
+            addTask()
+        }
+    }
+
+    private fun addTask() {
         val id = uiState.value.id
         val task = Task(
-            id = if(id != "0") id else "${Random.nextInt()}",
+            id = if (id != "0") id else "${Random.nextInt()}",
             description = uiState.value.description,
             priority = uiState.value.priority,
             deadline = uiState.value.deadLine,
-            isDone = uiState.value.hasDeadLine,
-            createDate = System.currentTimeMillis(),
+            isDone = uiState.value.isDone,
+            createDate = if (uiState.value.createdAt == 0L) System.currentTimeMillis() else uiState.value.createdAt,
             editDate = System.currentTimeMillis(),
         )
         repository.addTask(task)
@@ -44,8 +54,10 @@ class TaskScreenViewModel @Inject constructor(
                 id = task.id,
                 description = task.description,
                 priority = task.priority,
+                isDone = task.isDone,
                 deadLine = task.deadline,
                 hasDeadLine = task.deadline > 0L,
+                createdAt = task.createDate,
                 isEditState = isEdit,
             )
         }
@@ -53,7 +65,8 @@ class TaskScreenViewModel @Inject constructor(
 
     fun changeDescription(text: String) {
         _uiState.value = uiState.value.copy(
-            description = text
+            description = text,
+            isDescriptionError = false,
         )
     }
 
@@ -71,8 +84,11 @@ class TaskScreenViewModel @Inject constructor(
 
     fun changeHasDeadLine(hasDeadLine: Boolean) {
         _uiState.value = uiState.value.copy(
-            hasDeadLine = hasDeadLine
+            hasDeadLine = hasDeadLine,
         )
+        if(!hasDeadLine) {
+            changeDeadLine(0L)
+        }
     }
 
 }

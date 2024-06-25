@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -29,13 +28,14 @@ import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @Composable
 fun TaskItem(
+    modifier: Modifier,
     task: Task,
     onClick: (String) -> Unit,
     onDetailsClick: (String) -> Unit,
     onChangeTaskIsDone: (String, Boolean) -> Unit,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(TasksTheme.colorScheme.backSecondary)
             .focusable(true)
@@ -103,7 +103,6 @@ fun TaskItem(
                 .focusable(true)
                 .clickable { onDetailsClick(task.id) },
             painter = painterResource(id = R.drawable.icon_info),
-            colorFilter = ColorFilter.tint(TasksTheme.colorScheme.labelTertiary),
             contentDescription = stringResource(R.string.details)
         )
     }

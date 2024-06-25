@@ -1,11 +1,11 @@
 package io.github.aptemkov.tasksapp.domain.repository
 
 import io.github.aptemkov.tasksapp.domain.models.Task
+import kotlinx.coroutines.flow.Flow
 
 interface TasksRepository {
-    val tasks: List<Task>
 
-    fun getAllTasks(): List<Task>
+    fun getAllTasks(): Flow<List<Task>>
 
     fun getTaskById(id: String): Task?
 

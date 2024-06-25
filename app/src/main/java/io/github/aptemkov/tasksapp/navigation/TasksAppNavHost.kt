@@ -52,7 +52,7 @@ fun TasksAppNavHost(navController: NavHostController) {
                 uiState = uiState,
                 tasksScreenArgument = argument,
                 onNewTaskAdd = {
-                    viewModel.addTask()
+                    viewModel.saveTask()
                 },
                 onRemoveTask = {
                     viewModel.removeTask()

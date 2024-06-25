@@ -3,43 +3,62 @@ package io.github.aptemkov.tasksapp.data.repository
 import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
 import io.github.aptemkov.tasksapp.presentation.home.testList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TasksRepositoryImpl @Inject constructor(): TasksRepository {
-    private val _tasks: MutableList<Task> = testList.toMutableList()
-    override val tasks: List<Task> get() = _tasks
+    val tasks: List<Task> = testList
 
-    override fun getAllTasks(): List<Task> {
-        return tasks
+    private val _tasksFlow = MutableStateFlow(tasks)
+
+    override fun getAllTasks(): Flow<List<Task>> {
+        return _tasksFlow.asStateFlow()
     }
 
     override fun getTaskById(id: String): Task? {
-        val task = tasks.find { it.id == id }
+        val task = _tasksFlow.value.find { it.id == id }
         return task
     }
 
     override fun removeTaskById(id: String): Boolean {
-        _tasks.removeAll { it.id == id }
+        _tasksFlow.update { prev ->
+            prev.filter { it.id != id }
+        }
         return true
     }
 
     override fun addTask(task: Task): Boolean {
-        val prevTaskId = _tasks.indexOfFirst { it.id == task.id }
+        val prevTaskPosition = _tasksFlow.value.indexOfFirst { it.id == task.id }
 
-        if(prevTaskId != -1) {
-            _tasks[prevTaskId] = task
+        if(prevTaskPosition != -1) {
+            _tasksFlow.update { prev ->
+                prev.toMutableList().apply {
+                    this[prevTaskPosition] = task
+                }
+            }
         } else {
-            _tasks.add(index = 0, element = task)
+            _tasksFlow.update { prev ->
+                prev.toMutableList().apply {
+                    this.add(0, element = task)
+                }
+            }
         }
-
         return true
     }
 
     override fun changeTaskDone(taskId: String, isDone: Boolean) {
-        val index = _tasks.indexOfFirst { it.id == taskId }
-        _tasks[index] = _tasks[index].copy(isDone = isDone)
+        val index = _tasksFlow.value.indexOfFirst { it.id == taskId }
+        if(index == -1) return
+        _tasksFlow.update { prev ->
+            prev.toMutableList().apply {
+                this[index] = this[index].copy(isDone = isDone)
+            }
+        }
     }
 
 }

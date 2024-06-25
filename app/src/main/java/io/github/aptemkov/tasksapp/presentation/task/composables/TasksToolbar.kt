@@ -15,10 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
-import io.github.aptemkov.tasksapp.domain.models.Priority
-import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
-import kotlin.random.Random
 
 @Composable
 fun TasksToolbar(
@@ -49,7 +46,6 @@ fun TasksToolbar(
                 .focusable()
                 .clickable {
                     onNewTaskAdd()
-                    onBack()
                 }
         )
     }
