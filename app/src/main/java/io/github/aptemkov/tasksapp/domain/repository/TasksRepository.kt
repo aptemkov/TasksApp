@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.Flow
 
 interface TasksRepository {
 
-    fun getAllTasks(): Flow<List<Task>>
+    suspend fun getAllTasks(): Flow<List<Task>>
 
-    fun getTaskById(id: String): Task?
+    suspend fun getTaskById(id: String): Task?
 
-    fun removeTaskById(id: String): Boolean
+    suspend fun removeTaskById(id: String): Boolean
 
-    fun addTask(task: Task): Boolean
+    suspend fun addTask(task: Task): Boolean
 
-    fun changeTaskDone(taskId: String, isDone: Boolean)
+    suspend fun changeTaskDone(taskId: String, isDone: Boolean)
 
 }

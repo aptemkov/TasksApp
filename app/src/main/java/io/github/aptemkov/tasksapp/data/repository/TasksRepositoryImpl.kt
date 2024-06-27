@@ -16,23 +16,23 @@ class TasksRepositoryImpl @Inject constructor(): TasksRepository {
 
     private val _tasksFlow = MutableStateFlow(tasks)
 
-    override fun getAllTasks(): Flow<List<Task>> {
+    override suspend fun getAllTasks(): Flow<List<Task>> {
         return _tasksFlow.asStateFlow()
     }
 
-    override fun getTaskById(id: String): Task? {
+    override suspend fun getTaskById(id: String): Task? {
         val task = _tasksFlow.value.find { it.id == id }
         return task
     }
 
-    override fun removeTaskById(id: String): Boolean {
+    override suspend fun removeTaskById(id: String): Boolean {
         _tasksFlow.update { prev ->
             prev.filter { it.id != id }
         }
         return true
     }
 
-    override fun addTask(task: Task): Boolean {
+    override suspend fun addTask(task: Task): Boolean {
         val prevTaskPosition = _tasksFlow.value.indexOfFirst { it.id == task.id }
 
         if(prevTaskPosition != -1) {
@@ -51,7 +51,7 @@ class TasksRepositoryImpl @Inject constructor(): TasksRepository {
         return true
     }
 
-    override fun changeTaskDone(taskId: String, isDone: Boolean) {
+    override suspend fun changeTaskDone(taskId: String, isDone: Boolean) {
         val index = _tasksFlow.value.indexOfFirst { it.id == taskId }
         if(index == -1) return
         _tasksFlow.update { prev ->

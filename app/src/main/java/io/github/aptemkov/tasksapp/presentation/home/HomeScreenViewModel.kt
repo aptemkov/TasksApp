@@ -7,9 +7,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,15 +33,16 @@ class HomeScreenViewModel @Inject constructor(
                 homeState.copy(
                     tasksList = tasks
                 )
-            }.collectLatest {
-                Log.i("testtest", "loadTasks: collected")
+            }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), HomeScreenUiState()).collectLatest {
                 _uiState.value = it
             }
         }
     }
 
     fun changeTaskIsDone(id: String, isDone: Boolean) {
-        repository.changeTaskDone(taskId = id, isDone = isDone)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.changeTaskDone(taskId = id, isDone = isDone)
+        }
     }
 
     fun changeVisibility() {
