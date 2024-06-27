@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
@@ -51,15 +52,18 @@ fun TasksToolbar(
     }
 }
 
-/*
-val random = Random.nextInt()
-onNewTaskAdd(
-    Task(
-        id = "$random",
-        description = "descr $random",
-        priority = Priority.DEFAULT,
-        deadline = 1L,
-        isDone = Random.nextBoolean(),
-    )
-)
- */
+@Preview
+@Composable
+private fun LightTasksToolBarPreview() {
+    TasksTheme(isDarkTheme = false) {
+        TasksToolbar(onBack = { }, onNewTaskAdd = { })
+    }
+}
+
+@Preview
+@Composable
+private fun DarkTasksToolBarPreview() {
+    TasksTheme(isDarkTheme = true) {
+        TasksToolbar(onBack = { }, onNewTaskAdd = { })
+    }
+}

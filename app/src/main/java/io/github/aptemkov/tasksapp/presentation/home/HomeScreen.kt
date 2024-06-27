@@ -14,7 +14,9 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.aptemkov.tasksapp.domain.models.Priority
 import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.presentation.home.composables.HomeFab
 import io.github.aptemkov.tasksapp.presentation.home.composables.HomeScreenCollapsingToolBar
@@ -48,7 +50,7 @@ fun HomeScreen(
             HomeFab(onNewTaskClick)
         },
         containerColor = TasksTheme.colorScheme.backPrimary,
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+        modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
         HomeScreenContent(
             modifier = Modifier.padding(innerPadding),
@@ -71,7 +73,7 @@ private fun HomeScreenContent(
     onChangeTaskIsDone: (String, Boolean) -> Unit,
 ) {
     Card(
-        modifier = modifier.padding(horizontal = 8.dp).fillMaxSize(),
+        modifier = modifier.padding(horizontal = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(containerColor = TasksTheme.colorScheme.backSecondary)
     ) {
@@ -94,5 +96,55 @@ private fun HomeScreenContent(
                 NewTaskItem(onNewTaskClick)
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun LightHomeScreenPreview() {
+    val state = HomeScreenUiState(
+        tasksList = listOf(
+            Task(id = "1", description = "Улыбнуться", priority = Priority.HIGH, deadline = 19291L, isDone = false, createDate = 0L, editDate = 0L),
+            Task(id = "2", description = "Утром пресс качат, бегит, анжуманя, турник", priority = Priority.LOW, deadline = 0, isDone = true, createDate = 0L, editDate = 0L),
+            Task(id = "3", description = "Купить что-то, где-то, зачем-то, но зачем не очень понятно, но точно чтобы показать как обрезается… и даже немного больше, чтобы точно заметить правильность", priority = Priority.DEFAULT, deadline = 1L, isDone = false, createDate = 0L, editDate = 0L),
+            Task(id = "4", description = "Сходить в магазин за покупками", priority = Priority.DEFAULT, deadline = 0, isDone = true, createDate = 0L, editDate = 0L),
+        ),
+        showCompletedTasks = false,
+    )
+
+    TasksTheme(isDarkTheme = false) {
+        HomeScreen(
+            uiState = state,
+            changeVisibility = { },
+            onItemClick = {},
+            onChangeTaskIsDone = { str, bool ->},
+            onNewTaskClick = { },
+            onDetailsClick = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun DarkHomeScreenPreview() {
+    val state = HomeScreenUiState(
+        tasksList = listOf(
+            Task(id = "1", description = "Улыбнуться", priority = Priority.HIGH, deadline = 19291L, isDone = false, createDate = 0L, editDate = 0L),
+            Task(id = "2", description = "Утром пресс качат, бегит, анжуманя, турник", priority = Priority.LOW, deadline = 0, isDone = true, createDate = 0L, editDate = 0L),
+            Task(id = "3", description = "Купить что-то, где-то, зачем-то, но зачем не очень понятно, но точно чтобы показать как обрезается… и даже немного больше, чтобы точно заметить правильность", priority = Priority.DEFAULT, deadline = 1L, isDone = false, createDate = 0L, editDate = 0L),
+            Task(id = "4", description = "Сходить в магазин за покупками", priority = Priority.DEFAULT, deadline = 0, isDone = true, createDate = 0L, editDate = 0L),
+        ),
+        showCompletedTasks = true,
+    )
+
+    TasksTheme(isDarkTheme = true) {
+        HomeScreen(
+            uiState = state,
+            changeVisibility = { },
+            onItemClick = {},
+            onChangeTaskIsDone = { str, bool ->},
+            onNewTaskClick = { },
+            onDetailsClick = {}
+        )
     }
 }
