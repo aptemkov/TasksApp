@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-java@v4.0.0
         with:
           java-version: '17'
+          distribution: 'adopt'
 
       - name: Make Gradle executable
         run: chmod +x ./gradlew
@@ -44,6 +45,7 @@ jobs:
         uses: actions/setup-java@v4.0.0
         with:
           java-version: '17'
+          distribution: 'adopt'
 
       - name: Run tests
         run: ./gradlew test
@@ -66,6 +68,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '17'
+          distribution: 'adopt'
   
       - name: Run espresso tests
         uses: reactivecircus/android-emulator-runner@v2
@@ -91,6 +94,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '17'
+          distribution: 'adopt'
   
       - name: Build debug APK
         run: ./gradlew assembleDebug --stacktrace
