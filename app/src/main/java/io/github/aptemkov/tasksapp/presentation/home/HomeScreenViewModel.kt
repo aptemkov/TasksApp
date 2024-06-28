@@ -33,10 +33,8 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     private fun loadTasks() {
-        Log.i("testtest", "loadTasks: function")
         scope.launch(Dispatchers.IO) {
             combine(uiState, repository.getAllTasks()) { homeState, tasks ->
-                Log.i("testtest", "load inside collect")
                 homeState.copy(
                     tasksList = tasks
                 )

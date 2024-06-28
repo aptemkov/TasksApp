@@ -1,5 +1,6 @@
 package io.github.aptemkov.tasksapp.presentation.task
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,9 @@ class TaskScreenViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(TaskScreenUiState())
     val uiState = _uiState.asStateFlow()
-    private val scope = viewModelScope + CoroutineExceptionHandler { coroutineContext, throwable ->  }
+    private val scope = viewModelScope + CoroutineExceptionHandler { coroutineContext, throwable ->
+        Log.e("TaskScreenVM", throwable.stackTrace.toString())
+    }
 
     fun saveTask() {
         if(uiState.value.description.isBlank()) {
