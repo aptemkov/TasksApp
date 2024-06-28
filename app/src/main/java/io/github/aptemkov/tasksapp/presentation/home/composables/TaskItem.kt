@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -74,12 +75,13 @@ fun TaskItem(
             Spacer(modifier = Modifier.width(4.dp))
         }
 
+        val textDecoration = if(task.isDone) TextDecoration.LineThrough else null
         Column(modifier = Modifier.weight(1F)) {
             Text(
                 modifier = Modifier,
                 text = task.description,
                 color = TasksTheme.colorScheme.labelPrimary,
-                style = TasksTheme.typography.body,
+                style = TasksTheme.typography.body.copy(textDecoration = textDecoration),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -90,7 +92,7 @@ fun TaskItem(
                     modifier = Modifier,
                     text = stringResource(R.string.deadline_till, task.deadline.toDateString()),
                     color = TasksTheme.colorScheme.labelTertiary,
-                    style = TasksTheme.typography.subhead,
+                    style = TasksTheme.typography.subhead.copy(textDecoration = textDecoration),
                     maxLines = 1,
                 )
             }
