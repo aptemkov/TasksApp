@@ -29,7 +29,8 @@ fun TasksTextField(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(2.dp)
+        elevation = CardDefaults.cardElevation(2.dp),
+        colors = CardDefaults.elevatedCardColors(containerColor = TasksTheme.colorScheme.backSecondary)
     ) {
         OutlinedTextField(
             shape = CardDefaults.shape,
@@ -59,7 +60,8 @@ fun TasksTextField(
                     Icon(
                         imageVector =  Icons.Filled.Warning,
                         contentDescription = stringResource(R.string.text_field_error),
-                        tint = TasksTheme.colorScheme.red)
+                        tint = TasksTheme.colorScheme.red
+                    )
                 }
             }
         )
