@@ -58,7 +58,7 @@ fun TasksAppNavHost(navController: NavHostController) {
                     viewModel.removeTask()
                 },
                 onLoadTask = { taskId ->
-                    viewModel.loadTask(id = taskId, isEdit = args.isEdit)
+                    viewModel.loadTask(id = taskId)
                 },
                 onDescriptionChange = { description ->
                     viewModel.changeDescription(description)

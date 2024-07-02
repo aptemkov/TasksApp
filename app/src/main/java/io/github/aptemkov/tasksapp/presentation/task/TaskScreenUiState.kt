@@ -10,6 +10,5 @@ data class TaskScreenUiState(
     val deadLine: Long = 0L,
     val createdAt: Long = 0L,
     val hasDeadLine: Boolean = false,
-    val isEditState: Boolean = false,
     val isDescriptionError: Boolean = false,
 )

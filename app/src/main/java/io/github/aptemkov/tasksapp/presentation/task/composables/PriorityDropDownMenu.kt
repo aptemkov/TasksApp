@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.domain.models.Priority
@@ -87,5 +88,31 @@ fun PriorityDropDownMenu(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun LightDropDownMenuPreview() {
+    TasksTheme(isDarkTheme = false) {
+        PriorityDropDownMenu(
+            modifier = Modifier,
+            selectedPriority = Priority.HIGH,
+            isEditingEnabled = true,
+            onPriorityChange = { },
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun DarkDropDownMenuPreview() {
+    TasksTheme(isDarkTheme = true) {
+        PriorityDropDownMenu(
+            modifier = Modifier,
+            selectedPriority = Priority.LOW,
+            isEditingEnabled = true,
+            onPriorityChange = { },
+        )
     }
 }

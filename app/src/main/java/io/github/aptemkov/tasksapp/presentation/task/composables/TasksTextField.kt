@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
@@ -28,7 +29,8 @@ fun TasksTextField(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(2.dp)
+        elevation = CardDefaults.cardElevation(2.dp),
+        colors = CardDefaults.elevatedCardColors(containerColor = TasksTheme.colorScheme.backSecondary)
     ) {
         OutlinedTextField(
             shape = CardDefaults.shape,
@@ -58,9 +60,36 @@ fun TasksTextField(
                     Icon(
                         imageVector =  Icons.Filled.Warning,
                         contentDescription = stringResource(R.string.text_field_error),
-                        tint = TasksTheme.colorScheme.red)
+                        tint = TasksTheme.colorScheme.red
+                    )
                 }
             }
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun LightTasksTextFieldPreview() {
+    TasksTheme(isDarkTheme = false) {
+        TasksTextField(
+            description = "Длинное описание задачи для того, чтобы проверить корректное отображение длинного текста, который может не поместиться в карточку.",
+            isEditingEnabled = true,
+            onValueChange = {},
+            isError = false,
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun DarkTasksTextFieldPreview() {
+    TasksTheme(isDarkTheme = true) {
+        TasksTextField(
+            description = "Длинное описание задачи для того, чтобы проверить корректное отображение длинного текста, который может не поместиться в карточку.",
+            isEditingEnabled = true,
+            onValueChange = {},
+            isError = true,
         )
     }
 }

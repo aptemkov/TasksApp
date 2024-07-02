@@ -5,6 +5,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
@@ -19,5 +20,21 @@ fun HomeFab(onNewTaskClick: () -> Unit) {
             painter = painterResource(id = R.drawable.icon_plus),
             contentDescription = stringResource(R.string.new_task)
         )
+    }
+}
+
+@Preview
+@Composable
+private fun LightHomeFabPreview() {
+    TasksTheme(isDarkTheme = false) {
+        HomeFab {}
+    }
+}
+
+@Preview
+@Composable
+private fun DarkHomeFabPreview() {
+    TasksTheme(isDarkTheme = true) {
+        HomeFab {}
     }
 }

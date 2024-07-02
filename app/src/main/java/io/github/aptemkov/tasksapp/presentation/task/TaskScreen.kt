@@ -41,7 +41,7 @@ fun TaskScreen(
     onHasDeadLineChange: (Boolean) -> Unit,
     onNewTaskAdd: () -> Unit,
     onRemoveTask: () -> Unit,
-    onLoadTask: (id: String) -> Unit,
+    onLoadTask: (String) -> Unit,
     onBack: () -> Unit,
 ) {
     Scaffold(
