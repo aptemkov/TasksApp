@@ -4,11 +4,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.aptemkov.tasksapp.R
+import io.github.aptemkov.tasksapp.app.receivers.NetworkBroadcastReceiver
+import io.github.aptemkov.tasksapp.app.providers.ResourceProvider
+import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -20,16 +25,23 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val repository: TasksRepository,
+    private val connectivityReceiver: NetworkBroadcastReceiver,
+    private val resourceProvider: ResourceProvider,
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeScreenUiState())
     val uiState = _uiState.asStateFlow()
+
+    private val _uiAlert = MutableStateFlow("")
+    val uiAlert: StateFlow<String> = _uiAlert
+
     private val scope = viewModelScope + CoroutineExceptionHandler { coroutineContext, throwable ->
         Log.e("HomeScreenVM", throwable.stackTrace.toString())
     }
 
     init {
         loadTasks()
+        observeNetworkChanges()
     }
 
     private fun loadTasks() {
@@ -44,9 +56,13 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun changeTaskIsDone(id: String, isDone: Boolean) {
+    fun changeTaskIsDone(task: Task, isDone: Boolean) {
         scope.launch(Dispatchers.IO) {
-            repository.changeTaskDone(taskId = id, isDone = isDone)
+            val result = repository.changeTaskDone(task = task, isDone = isDone)
+            if(result.isFailure) {
+                _uiAlert.value = result.exceptionOrNull()?.message ?:
+                    resourceProvider.getString(R.string.unexpected_exception)
+            }
         }
     }
 
@@ -55,5 +71,20 @@ class HomeScreenViewModel @Inject constructor(
             showCompletedTasks = !uiState.value.showCompletedTasks
         )
     }
+
+    private fun observeNetworkChanges() {
+        scope.launch(Dispatchers.IO) {
+            connectivityReceiver.connection.collect { isConnected ->
+                if (isConnected) {
+                    repository.updateRemoteTasks()
+                    repository.getAllTasks()
+                } else {
+                    _uiAlert.value = resourceProvider.getString(R.string.disconnected_from_internet)
+                }
+            }
+        }
+    }
+
+
 
 }

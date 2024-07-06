@@ -21,6 +21,17 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField(
+            type = "String",
+            name = "BEARER_API_KEY",
+            value = "\"" + property("BEARER_API_KEY") + "\""
+        )
+        buildConfigField(
+            type = "String",
+            name = "TASKS_BASE_URL",
+            value = "\"" + property("TASKS_BASE_URL") + "\""
+        )
     }
 
     buildTypes {
@@ -41,6 +52,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -75,4 +87,14 @@ dependencies {
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.lifecycle.compose)
     implementation(libs.hilt.navigation)
+    implementation(libs.work.manager)
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    api(libs.okhttp)
+
 }

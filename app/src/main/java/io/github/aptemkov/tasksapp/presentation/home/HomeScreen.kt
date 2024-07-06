@@ -1,5 +1,6 @@
 package io.github.aptemkov.tasksapp.presentation.home
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,8 +13,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.domain.models.Priority
@@ -28,14 +31,20 @@ import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 @Composable
 fun HomeScreen(
     uiState: HomeScreenUiState,
+    uiAlertState: String,
     changeVisibility: () -> Unit,
     onItemClick: (String) -> Unit,
-    onChangeTaskIsDone: (String, Boolean) -> Unit,
+    onChangeTaskIsDone: (Task, Boolean) -> Unit,
     onNewTaskClick: () -> Unit,
     onDetailsClick: (String) -> Unit,
 ) {
+    val context = LocalContext.current
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+
+    LaunchedEffect(uiAlertState) {
+        Toast.makeText(context, uiAlertState, Toast.LENGTH_SHORT).show()
+    }
 
     Scaffold(
         topBar = {
@@ -50,7 +59,9 @@ fun HomeScreen(
             HomeFab(onNewTaskClick)
         },
         containerColor = TasksTheme.colorScheme.backPrimary,
-        modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
         HomeScreenContent(
             modifier = Modifier.padding(innerPadding),
@@ -70,7 +81,7 @@ private fun HomeScreenContent(
     onItemClick: (String) -> Unit,
     onNewTaskClick: () -> Unit,
     onDetailsClick: (String) -> Unit,
-    onChangeTaskIsDone: (String, Boolean) -> Unit,
+    onChangeTaskIsDone: (Task, Boolean) -> Unit,
 ) {
     Card(
         modifier = modifier.padding(horizontal = 8.dp),
@@ -115,6 +126,7 @@ private fun LightHomeScreenPreview() {
     TasksTheme(isDarkTheme = false) {
         HomeScreen(
             uiState = state,
+            uiAlertState = "",
             changeVisibility = { },
             onItemClick = {},
             onChangeTaskIsDone = { str, bool ->},
@@ -140,6 +152,7 @@ private fun DarkHomeScreenPreview() {
     TasksTheme(isDarkTheme = true) {
         HomeScreen(
             uiState = state,
+            uiAlertState = "",
             changeVisibility = { },
             onItemClick = {},
             onChangeTaskIsDone = { str, bool ->},

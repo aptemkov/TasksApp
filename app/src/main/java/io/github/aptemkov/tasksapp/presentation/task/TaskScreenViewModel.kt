@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
+import java.util.UUID
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class TaskScreenViewModel @Inject constructor(
@@ -40,7 +40,7 @@ class TaskScreenViewModel @Inject constructor(
     private fun addTask() {
         val id = uiState.value.id
         val task = Task(
-            id = if (id != "0") id else "${Random.nextInt()}",
+            id = if (id != "0") id else "${UUID.randomUUID()}",
             description = uiState.value.description,
             priority = uiState.value.priority,
             deadline = uiState.value.deadLine,
@@ -61,7 +61,7 @@ class TaskScreenViewModel @Inject constructor(
 
     fun loadTask(id: String) {
         scope.launch(Dispatchers.IO) {
-            val task = repository.getTaskById(id)
+            val task = repository.getTaskById(id).getOrNull()
             task?.let {
                 _uiState.value = uiState.value.copy(
                     id = task.id,

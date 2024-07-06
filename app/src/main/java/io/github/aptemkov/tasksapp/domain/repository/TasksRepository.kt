@@ -7,12 +7,14 @@ interface TasksRepository {
 
     suspend fun getAllTasks(): Flow<List<Task>>
 
-    suspend fun getTaskById(id: String): Task?
+    suspend fun updateRemoteTasks(): Result<Boolean>
 
-    suspend fun removeTaskById(id: String): Boolean
+    suspend fun getTaskById(id: String): Result<Task?>
 
-    suspend fun addTask(task: Task): Boolean
+    suspend fun removeTaskById(id: String): Result<Boolean>
 
-    suspend fun changeTaskDone(taskId: String, isDone: Boolean)
+    suspend fun addTask(task: Task): Result<Boolean>
+
+    suspend fun changeTaskDone(task: Task, isDone: Boolean): Result<Boolean>
 
 }
