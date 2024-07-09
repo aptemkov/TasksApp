@@ -22,7 +22,7 @@
     <string name="deadline_till">До %1$s</string>
     <string name="text_field_error">Ошибка текстового поля</string>
     <string name="connected_to_internet">Интернет появился</string>
-    <string name="disconnected_from_internet">Интернет отсутствует, \\nНекоторые функции могут работать некорректно\\</string>
+    <string name="disconnected_from_internet">Интернет отсутствует, \nНекоторые функции могут работать некорректно</string>
     <string name="unexpected_exception">Неожиданная ошибка</string>
     <string name="error_receiving_data_from_server">Ошибка получения данных с сервера</string>
     <string name="error_adding_new_task">Ошибка добавления задачи</string>

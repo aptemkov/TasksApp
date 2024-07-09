@@ -43,7 +43,9 @@ fun HomeScreen(
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
     LaunchedEffect(uiAlertState) {
-        Toast.makeText(context, uiAlertState, Toast.LENGTH_SHORT).show()
+        if(uiAlertState.isNotEmpty()) {
+            Toast.makeText(context, uiAlertState, Toast.LENGTH_SHORT).show()
+        }
     }
 
     Scaffold(
