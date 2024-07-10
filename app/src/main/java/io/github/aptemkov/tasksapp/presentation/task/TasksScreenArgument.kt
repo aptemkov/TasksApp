@@ -1,8 +1,9 @@
 package io.github.aptemkov.tasksapp.presentation.task
 
-// Честно говоря, нигде не видел такого способа переиспользования экрана.
-// Здесь я просто для удобства сделал такой аргумент для TaskScreen, чтобы не передавать
-// в экран id: String и isEdit: Boolean, а потом ещё и обрабатывать внутри него.
+/**
+ * Данный класс необходим для удобной передачи аргументов в экран TaskScreen
+ *
+ */
 
 sealed class TasksScreenArgument() {
     data class TaskEdit(val id: String) : TasksScreenArgument()

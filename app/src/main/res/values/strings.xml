@@ -20,4 +20,12 @@
     <string name="is_task_done">Is task done</string>
     <string name="deadline_till">Till %1$s</string>
     <string name="text_field_error">Text field error</string>
+    <string name="connected_to_internet">Connected to the Internet</string>
+    <string name="disconnected_from_internet">Disconnected from the Internet \nSome functions may work incorrectly</string>
+    <string name="unexpected_exception">Unexpected exception</string>
+    <string name="error_receiving_data_from_server">Error receiving data from server, \n%1$s</string>
+    <string name="error_adding_new_task">Adding new task exception, \n%1$s</string>
+    <string name="error_editing_task">Editing task exception, \n%1$s</string>
+    <string name="error_editing_tasks_list">Editing tasks exception, \n%1$s</string>
+    <string name="error_deleting_task">Deleting task exception, \n%1$s</string>
 </resources>

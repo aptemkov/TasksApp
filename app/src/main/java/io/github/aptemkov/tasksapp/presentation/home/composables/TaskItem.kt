@@ -34,7 +34,7 @@ fun TaskItem(
     task: Task,
     onClick: (String) -> Unit,
     onDetailsClick: (String) -> Unit,
-    onChangeTaskIsDone: (String, Boolean) -> Unit,
+    onChangeTaskIsDone: (Task, Boolean) -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -49,7 +49,7 @@ fun TaskItem(
             modifier = Modifier
                 .size(24.dp)
                 .clickable {
-                    onChangeTaskIsDone(task.id, !task.isDone)
+                    onChangeTaskIsDone(task, !task.isDone)
                 },
             painter = when (task.isDone) {
                 true -> painterResource(id = R.drawable.icon_checked)
