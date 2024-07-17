@@ -105,4 +105,4 @@ jobs:
         shell: bash
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew :app:reportTelegramApkForPaidRelease $gradleFlags
+        run: ./gradlew :app:reportTelegramApkForDebug $gradleFlags
