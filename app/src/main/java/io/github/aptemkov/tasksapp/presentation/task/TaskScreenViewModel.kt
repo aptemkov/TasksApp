@@ -7,6 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.aptemkov.tasksapp.domain.models.Priority
 import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
+import io.github.aptemkov.tasksapp.domain.usecase.AddTaskUseCase
+import io.github.aptemkov.tasksapp.domain.usecase.GetTaskByIdUseCase
+import io.github.aptemkov.tasksapp.domain.usecase.RemoveTaskByIdUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +22,9 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskScreenViewModel @Inject constructor(
     private val repository: TasksRepository,
+    private val removeTaskByIdUseCase: RemoveTaskByIdUseCase,
+    private val getTaskByIdUseCase: GetTaskByIdUseCase,
+    private val addTaskUseCase: AddTaskUseCase,
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(TaskScreenUiState())
@@ -49,19 +55,22 @@ class TaskScreenViewModel @Inject constructor(
             editDate = System.currentTimeMillis(),
         )
         scope.launch(Dispatchers.IO) {
-            repository.addTask(task)
+            //repository.addTask(task)
+            addTaskUseCase.execute(task)
         }
     }
 
     fun removeTask() {
         scope.launch(Dispatchers.IO) {
-            repository.removeTaskById(uiState.value.id)
+            //repository.removeTaskById(uiState.value.id)
+            removeTaskByIdUseCase.execute(uiState.value.id)
         }
     }
 
     fun loadTask(id: String) {
         scope.launch(Dispatchers.IO) {
-            val task = repository.getTaskById(id).getOrNull()
+            //val task = repository.getTaskById(id).getOrNull()
+            val task = getTaskByIdUseCase.execute(id).getOrNull()
             task?.let {
                 _uiState.value = uiState.value.copy(
                     id = task.id,

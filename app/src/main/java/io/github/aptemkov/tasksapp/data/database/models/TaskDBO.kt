@@ -13,6 +13,7 @@ data class TaskDBO(
     @ColumnInfo("importance") val priority: Priority,
     @ColumnInfo("deadline") val deadline: Long = 0L,
     @ColumnInfo("done") val isDone: Boolean,
+    @ColumnInfo("removed") val isRemoved: Boolean = false,
     @ColumnInfo("created_at") val createDate: Long = 0L,
     @ColumnInfo("changed_at") val editDate: Long = 0L,
 )
@@ -24,18 +25,20 @@ fun Task.toTaskDBO(): TaskDBO {
         priority = this.priority,
         deadline = this.deadline,
         isDone = this.isDone,
+//        isRemoved = this.isRemoved,
         createDate = this.createDate,
         editDate = this.editDate,
     )
 }
 
 fun TaskDBO.toTask(): Task {
-    return  Task(
+    return Task(
         id = this.id,
         description = this.description,
         priority = this.priority,
         deadline = this.deadline,
         isDone = this.isDone,
+//        isRemoved = this.isRemoved,
         createDate = this.createDate,
         editDate = this.editDate,
     )

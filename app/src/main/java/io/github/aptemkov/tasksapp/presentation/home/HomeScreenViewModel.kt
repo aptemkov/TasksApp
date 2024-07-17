@@ -9,6 +9,9 @@ import io.github.aptemkov.tasksapp.app.receivers.NetworkBroadcastReceiver
 import io.github.aptemkov.tasksapp.app.providers.ResourceProvider
 import io.github.aptemkov.tasksapp.domain.models.Task
 import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
+import io.github.aptemkov.tasksapp.domain.usecase.ChangeTaskIsDoneUseCase
+import io.github.aptemkov.tasksapp.domain.usecase.GetAllTasksUseCase
+import io.github.aptemkov.tasksapp.domain.usecase.MergeTasksUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +27,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
+    private val getAllTasksUseCase: GetAllTasksUseCase,
+    private val changeTaskIsDoneUseCase: ChangeTaskIsDoneUseCase,
+    private val mergeTasksUseCase: MergeTasksUseCase,
     private val repository: TasksRepository,
     private val connectivityReceiver: NetworkBroadcastReceiver,
     private val resourceProvider: ResourceProvider,
@@ -46,7 +52,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun loadTasks() {
         scope.launch(Dispatchers.IO) {
-            combine(uiState, repository.getAllTasks()) { homeState, tasks ->
+            combine(uiState, getAllTasksUseCase.execute()) { homeState, tasks ->
                 homeState.copy(
                     tasksList = tasks
                 )
@@ -58,7 +64,7 @@ class HomeScreenViewModel @Inject constructor(
 
     fun changeTaskIsDone(task: Task, isDone: Boolean) {
         scope.launch(Dispatchers.IO) {
-            val result = repository.changeTaskDone(task = task, isDone = isDone)
+            val result = changeTaskIsDoneUseCase.execute(task = task, isDone = isDone)
             if(result.isFailure) {
                 _uiAlert.value = result.exceptionOrNull()?.message ?:
                     resourceProvider.getString(R.string.unexpected_exception)
@@ -76,8 +82,7 @@ class HomeScreenViewModel @Inject constructor(
         scope.launch(Dispatchers.IO) {
             connectivityReceiver.connection.collect { isConnected ->
                 if (isConnected) {
-                    repository.updateRemoteTasks()
-                    repository.getAllTasks()
+                    mergeTasksUseCase.execute()
                 } else {
                     _uiAlert.value = resourceProvider.getString(R.string.disconnected_from_internet)
                 }

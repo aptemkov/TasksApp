@@ -1,9 +1,24 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kapt)
+    id("telegram-reporter")
+}
+
+telegram {
+    // Здесь нужно указать Bot token в формате "10000:SomeBotToken"
+    token.set("")
+    // Здесь нужно указать Chat id в формате "1234567"
+    chatId.set("")
+    // Здесь можно поменять лимит для размера файла в Мб
+    maxSize.set(40*1024*1024)
+    // Здесь можно отключить/включить валидацию задачи
+    validationEnabled.set(true)
+    // Здесь можно отключить детали apk файла
+    detailsEnabled.set(true)
 }
 
 android {
@@ -13,6 +28,7 @@ android {
     defaultConfig {
         applicationId = "io.github.aptemkov.tasksapp"
         minSdk = 24
+        compileSdk = 34
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
