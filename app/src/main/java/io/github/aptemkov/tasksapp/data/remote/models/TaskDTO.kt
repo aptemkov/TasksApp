@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 data class Element (
     val id: String,
     val text: String,
+    val files: List<String>? = null,
     val importance: Importance,
     val deadline: Long? = null,
     val done: Boolean,

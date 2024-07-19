@@ -12,6 +12,7 @@ data class Task(
     val priority: Priority,
     val deadline: Long = 0L,
     val isDone: Boolean,
+    val isRemoved: Boolean = false,
     val createDate: Long = 0L,
     val editDate: Long = 0L,
 )

@@ -10,9 +10,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TasksDao {
 
+//    @Query("SELECT * FROM tasks WHERE removed = 0 ORDER BY created_at DESC")
     @Query("SELECT * FROM tasks ORDER BY created_at DESC")
     suspend fun getAll(): List<TaskDBO>
 
+//    @Query("SELECT * FROM tasks WHERE removed = 0 ORDER BY created_at DESC")
     @Query("SELECT * FROM tasks ORDER BY created_at DESC")
     fun observeAll(): Flow<List<TaskDBO>>
 
@@ -31,4 +33,6 @@ interface TasksDao {
     @Query("DELETE FROM tasks")
     suspend fun clean()
 
+//    @Query("UPDATE tasks SET removed = 1 WHERE id = :taskId")
+//    suspend fun markRemoved(taskId: String)
 }
