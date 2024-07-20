@@ -27,6 +27,7 @@ import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 @Composable
 fun PriorityBottomSheet(
     sheetState: SheetState,
+    isEditing: Boolean,
     onDismiss: () -> Unit,
     onItemClick: (Priority) -> Unit,
 ) {
@@ -41,7 +42,9 @@ fun PriorityBottomSheet(
             PriorityBottomSheetItem(
                 priority = priority,
                 onItemClick = {
-                    onItemClick(it)
+                    if(isEditing) {
+                        onItemClick(it)
+                    }
                     onDismiss()
                 }
             )

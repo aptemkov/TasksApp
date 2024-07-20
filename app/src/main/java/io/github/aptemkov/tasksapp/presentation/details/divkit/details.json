@@ -87,7 +87,7 @@
 
             {
               "type": "image",
-              "image_url": "https://yastatic.net/s3/home/divkit/logo.png",
+              "image_url": "https://developer.android.com/static/codelabs/basic-android-kotlin-compose-first-program/img/840cee8b164c10b_1920.png",
               "margins": {
                 "top": 10,
                 "right": 60,
@@ -100,7 +100,22 @@
               "type": "title",
               "text": "YaTodo v.1"
             },
-
+            {
+              "type": "subtitle",
+              "text": "Contact author",
+              "actions": [
+                {
+                  "log_id": "navigate_url",
+                  "url": "sample-action://url?https://t.me/aptemkov"
+                }
+              ],
+              "font_size": 14,
+              "margins": {
+                "bottom": 2
+              },
+              "text_color": "#0000ff",
+              "underline": "single"
+            },
             {
               "type": "subtitle",
               "text": "A simple application to make notes\n\nLibraries used in this application:",

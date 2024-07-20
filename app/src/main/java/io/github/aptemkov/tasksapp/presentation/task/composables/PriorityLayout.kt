@@ -1,5 +1,6 @@
 package io.github.aptemkov.tasksapp.presentation.task.composables
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,11 +19,18 @@ import io.github.aptemkov.tasksapp.domain.models.textName
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @Composable
-fun PriorityDropDownMenu(
+fun PriorityLayout(
     modifier: Modifier = Modifier,
     selectedPriority: Priority,
     changeVisibility: (Boolean) -> Unit,
 ) {
+    val priorityColor = animateColorAsState(
+        targetValue = when(selectedPriority) {
+            Priority.HIGH -> TasksTheme.colorScheme.red
+            else -> TasksTheme.colorScheme.labelTertiary
+        },
+        label = stringResource(R.string.selected_priority_animation),
+    )
 
     Column(
         modifier = modifier
@@ -41,7 +49,7 @@ fun PriorityDropDownMenu(
         Text(
             text = selectedPriority.textName,
             style = TasksTheme.typography.body,
-            color = TasksTheme.colorScheme.labelTertiary
+            color = priorityColor.value
         )
     }
 }
@@ -50,7 +58,7 @@ fun PriorityDropDownMenu(
 @Composable
 private fun LightDropDownMenuPreview() {
     TasksTheme(isDarkTheme = false) {
-        PriorityDropDownMenu(
+        PriorityLayout(
             modifier = Modifier,
             selectedPriority = Priority.HIGH,
             changeVisibility = { }
@@ -62,7 +70,7 @@ private fun LightDropDownMenuPreview() {
 @Composable
 private fun DarkDropDownMenuPreview() {
     TasksTheme(isDarkTheme = true) {
-        PriorityDropDownMenu(
+        PriorityLayout(
             modifier = Modifier,
             selectedPriority = Priority.LOW,
             changeVisibility = { }

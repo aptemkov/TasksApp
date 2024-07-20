@@ -1,8 +1,10 @@
 package io.github.aptemkov.tasksapp.presentation.details.divkit
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.yandex.div.core.DivActionHandler
 import com.yandex.div.core.DivViewFacade
 import com.yandex.div.json.expressions.ExpressionResolver
@@ -29,6 +31,11 @@ class DetailsDivActionHandler(private val onClose: () -> Unit) : DivActionHandle
             "back" -> {
                 onClose()
                 Toast.makeText(context, action.query, Toast.LENGTH_SHORT).show()
+                true
+            }
+            "url" -> {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(action.query))
+                startActivity(context, browserIntent, null)
                 true
             }
             else -> false

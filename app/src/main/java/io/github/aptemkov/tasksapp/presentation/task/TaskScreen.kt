@@ -25,7 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.domain.models.Priority
 import io.github.aptemkov.tasksapp.presentation.task.composables.PriorityBottomSheet
-import io.github.aptemkov.tasksapp.presentation.task.composables.PriorityDropDownMenu
+import io.github.aptemkov.tasksapp.presentation.task.composables.PriorityLayout
 import io.github.aptemkov.tasksapp.presentation.task.composables.RemoveRow
 import io.github.aptemkov.tasksapp.presentation.task.composables.TasksDatePicker
 import io.github.aptemkov.tasksapp.presentation.task.composables.TasksDatePickerDialog
@@ -121,7 +121,7 @@ fun TaskScreenContent(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            PriorityDropDownMenu(
+            PriorityLayout(
                 selectedPriority = uiState.priority,
                 changeVisibility = {
                     showBottomSheet = it
@@ -186,7 +186,8 @@ fun TaskScreenContent(
             PriorityBottomSheet(
                 sheetState = priorityBottomSheetState,
                 onDismiss = { showBottomSheet = false },
-                onItemClick = onPriorityChange
+                onItemClick = onPriorityChange,
+                isEditing = isEditingEnabled
             )
         }
     }

@@ -35,4 +35,5 @@
     <string name="app_theme_light">Светлая</string>
     <string name="app_theme_system">Как в системе</string>
     <string name="about_this_app">Об этом приложении</string>
+    <string name="selected_priority_animation">Анимация важности задачи</string>
 </resources>

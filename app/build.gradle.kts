@@ -10,9 +10,9 @@ plugins {
 
 telegram {
     // Здесь нужно указать Bot token в формате "10000:SomeBotToken"
-    token.set("")
+    token.set("7134628516:AAEnOd21WsTdt_r0LJMxxyVLMKCReZ5fUzI")
     // Здесь нужно указать Chat id в формате "1234567"
-    chatId.set("")
+    chatId.set("783998464")
     // Здесь можно поменять лимит для размера файла в Мб
     maxSize.set(40*1024*1024)
     // Здесь можно отключить/включить валидацию задачи
