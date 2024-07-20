@@ -29,4 +29,10 @@
     <string name="error_editing_task">Ошибка редактирования задачи</string>
     <string name="error_editing_tasks_list">Ошибка редактирования задач</string>
     <string name="error_deleting_task">Ошибка удаления задачи</string>
+    <string name="settings_title">Настройки</string>
+    <string name="app_theme">Тема приложения</string>
+    <string name="app_theme_dark">Тёмная</string>
+    <string name="app_theme_light">Светлая</string>
+    <string name="app_theme_system">Как в системе</string>
+    <string name="about_this_app">Об этом приложении</string>
 </resources>

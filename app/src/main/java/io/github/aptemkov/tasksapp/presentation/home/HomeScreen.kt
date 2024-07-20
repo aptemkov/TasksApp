@@ -37,6 +37,7 @@ fun HomeScreen(
     onChangeTaskIsDone: (Task, Boolean) -> Unit,
     onNewTaskClick: () -> Unit,
     onDetailsClick: (String) -> Unit,
+    onSettingsClick: () -> Unit,
 ) {
     val context = LocalContext.current
     val scrollBehavior =
@@ -54,6 +55,7 @@ fun HomeScreen(
                 scrollBehavior = scrollBehavior,
                 completedTasksNumber = uiState.completedTasksNumber,
                 showCompletedTasks = uiState.showCompletedTasks,
+                onSettingsClick = onSettingsClick,
                 changeVisibility = changeVisibility
             )
         },
@@ -133,6 +135,7 @@ private fun LightHomeScreenPreview() {
             onItemClick = {},
             onChangeTaskIsDone = { str, bool ->},
             onNewTaskClick = { },
+            onSettingsClick = {},
             onDetailsClick = {}
         )
     }
@@ -159,6 +162,7 @@ private fun DarkHomeScreenPreview() {
             onItemClick = {},
             onChangeTaskIsDone = { str, bool ->},
             onNewTaskClick = { },
+            onSettingsClick = {},
             onDetailsClick = {}
         )
     }

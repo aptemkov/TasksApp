@@ -14,6 +14,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.domain.models.Priority
+import io.github.aptemkov.tasksapp.presentation.task.composables.PriorityBottomSheet
 import io.github.aptemkov.tasksapp.presentation.task.composables.PriorityDropDownMenu
 import io.github.aptemkov.tasksapp.presentation.task.composables.RemoveRow
 import io.github.aptemkov.tasksapp.presentation.task.composables.TasksDatePicker
@@ -86,7 +88,9 @@ fun TaskScreenContent(
     onHasDeadLineChange: (Boolean) -> Unit,
     onBack: () -> Unit,
 ) {
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
+    val priorityBottomSheetState = rememberModalBottomSheetState()
     val datePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
     val isTaskLoaded = tasksScreenArgument !is TasksScreenArgument.TaskNew
     val isEditingEnabled = tasksScreenArgument !is TasksScreenArgument.TaskDetails
@@ -119,8 +123,9 @@ fun TaskScreenContent(
 
             PriorityDropDownMenu(
                 selectedPriority = uiState.priority,
-                isEditingEnabled = isEditingEnabled,
-                onPriorityChange = onPriorityChange,
+                changeVisibility = {
+                    showBottomSheet = it
+                }
             )
 
             HorizontalDivider(
@@ -175,6 +180,13 @@ fun TaskScreenContent(
                     onDeadLineChange(datePickerState.selectedDateMillis ?: 0L)
                     showDatePicker = false
                 },
+            )
+        }
+        if(showBottomSheet) {
+            PriorityBottomSheet(
+                sheetState = priorityBottomSheetState,
+                onDismiss = { showBottomSheet = false },
+                onItemClick = onPriorityChange
             )
         }
     }

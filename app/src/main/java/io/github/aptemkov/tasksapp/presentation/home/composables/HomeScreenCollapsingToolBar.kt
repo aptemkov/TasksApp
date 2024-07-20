@@ -2,12 +2,16 @@ package io.github.aptemkov.tasksapp.presentation.home.composables
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
@@ -36,6 +40,7 @@ fun HomeScreenCollapsingToolBar(
     completedTasksNumber: Int,
     showCompletedTasks: Boolean,
     changeVisibility: () -> Unit,
+    onSettingsClick: () -> Unit,
 ) {
     val isCollapsed = remember { derivedStateOf { scrollBehavior.state.collapsedFraction > 0.5 } }
 
@@ -75,6 +80,18 @@ fun HomeScreenCollapsingToolBar(
                         )
                     }
                 }
+
+                Icon(
+                    tint = TasksTheme.colorScheme.blue,
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = stringResource(id = R.string.settings_title),
+                    modifier = Modifier
+                        .focusable()
+                        .clickable { onSettingsClick() }
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
                 Icon(
                     tint = TasksTheme.colorScheme.blue,
                     painter = painterResource(
@@ -109,6 +126,7 @@ private fun LightToolBarPreview() {
             scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState()),
             completedTasksNumber = 7,
             showCompletedTasks = true,
+            onSettingsClick = {},
             changeVisibility = {}
         )
     }
@@ -123,6 +141,7 @@ private fun DarkToolBarPreview() {
             scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState()),
             completedTasksNumber = 7,
             showCompletedTasks = false,
+            onSettingsClick = {},
             changeVisibility = {}
         )
     }

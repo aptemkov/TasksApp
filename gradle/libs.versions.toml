@@ -21,6 +21,7 @@ retrofit = "2.11.0"
 workManager = "2.9.0"
 hiltCommon = "1.2.0"
 ktor = "2.3.7"
+div = "30.9.0"
 
 [libraries]
 agp = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -67,6 +68,13 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 
 ktor-client = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+
+
+yandex-div = { group = "com.yandex.div", name = "div", version.ref = "div" }
+yandex-div-core = { group = "com.yandex.div", name = "div-core", version.ref = "div" }
+yandex-div-json = { group = "com.yandex.div", name = "div-json", version.ref = "div" }
+yandex-div-picasso = { group = "com.yandex.div", name = "picasso", version.ref = "div" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

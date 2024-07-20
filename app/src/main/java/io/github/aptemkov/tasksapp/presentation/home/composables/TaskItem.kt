@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -36,6 +37,7 @@ fun TaskItem(
     onDetailsClick: (String) -> Unit,
     onChangeTaskIsDone: (Task, Boolean) -> Unit,
 ) {
+    val iconsTint = if(!task.isDone && task.priority != Priority.HIGH) ColorFilter.tint(TasksTheme.colorScheme.supportSeparator) else null
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -48,6 +50,7 @@ fun TaskItem(
         Image(
             modifier = Modifier
                 .size(24.dp)
+                .focusable()
                 .clickable {
                     onChangeTaskIsDone(task, !task.isDone)
                 },
@@ -58,6 +61,7 @@ fun TaskItem(
                     else painterResource(id = R.drawable.icon_unchecked)
                 }
             },
+            colorFilter = iconsTint,
             contentDescription = stringResource(R.string.is_task_done),
         )
 
@@ -106,6 +110,7 @@ fun TaskItem(
                 .focusable(true)
                 .clickable { onDetailsClick(task.id) },
             painter = painterResource(id = R.drawable.icon_info),
+            colorFilter = ColorFilter.tint(TasksTheme.colorScheme.supportSeparator),
             contentDescription = stringResource(R.string.details)
         )
     }

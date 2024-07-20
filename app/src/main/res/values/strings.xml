@@ -28,4 +28,10 @@
     <string name="error_editing_task">Editing task exception, \n%1$s</string>
     <string name="error_editing_tasks_list">Editing tasks exception, \n%1$s</string>
     <string name="error_deleting_task">Deleting task exception, \n%1$s</string>
+    <string name="settings_title">Settings</string>
+    <string name="app_theme">App theme</string>
+    <string name="app_theme_dark">Dark</string>
+    <string name="app_theme_light">Light</string>
+    <string name="app_theme_system">System</string>
+    <string name="about_this_app">About this app</string>
 </resources>

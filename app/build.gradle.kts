@@ -113,5 +113,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     api(libs.okhttp)
+    implementation(libs.yandex.div)
+    implementation(libs.yandex.div.core)
+    implementation(libs.yandex.div.json)
+    implementation(libs.yandex.div.picasso)
 
 }
