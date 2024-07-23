@@ -1,5 +1,6 @@
 package io.github.aptemkov.tasksapp.app.di
 
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,7 +10,9 @@ import io.github.aptemkov.tasksapp.data.database.TasksDatabase
 import io.github.aptemkov.tasksapp.data.remote.TasksApi
 import io.github.aptemkov.tasksapp.data.repository.LocalTasksRepositoryImpl
 import io.github.aptemkov.tasksapp.data.repository.RemoteTasksRepositoryImpl
+import io.github.aptemkov.tasksapp.data.repository.SharedPrefsRepositoryImpl
 import io.github.aptemkov.tasksapp.data.repository.TasksRepositoryImpl
+import io.github.aptemkov.tasksapp.domain.repository.SharedPrefsRepository
 import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
 
 @Module
@@ -38,6 +41,13 @@ object DataModule {
         resourceProvider: ResourceProvider
     ): RemoteTasksRepositoryImpl {
         return RemoteTasksRepositoryImpl(api, resourceProvider)
+    }
+
+    @Provides
+    fun provideSharedPrefsRepository(
+        sharedPreferences: SharedPreferences
+    ): SharedPrefsRepository {
+        return SharedPrefsRepositoryImpl(sharedPreferences)
     }
 
 }

@@ -10,3 +10,9 @@ data class TaskRoute(
     val id: String?,
     val isEdit: Boolean = false,
 )
+
+@Serializable
+object SettingsRoute
+
+@Serializable
+object DetailsRoute

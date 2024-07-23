@@ -1,0 +1,232 @@
+{
+  "templates": {
+    "item_card": {
+      "type": "text",
+      "font_size": 28,
+      "text_alignment_horizontal": "center",
+      "text_alignment_vertical": "center",
+      "alignment_horizontal": "center",
+      "text_color": "#000000",
+      "width": {
+        "type": "match_parent"
+      },
+      "height": {
+        "type": "fixed",
+        "value": 100
+      },
+      "background": [
+        {
+          "type": "solid",
+          "color": "#0E000000"
+        }
+      ],
+      "border": {
+        "corner_radius": 16
+      }
+    },
+    "tab_container": {
+      "type": "container",
+      "paddings": {
+        "left": 16,
+        "right": 16
+      }
+    },
+    "title": {
+      "type": "text",
+      "font_size": 20,
+      "line_height": 24,
+      "font_weight": "bold",
+      "paddings": {
+        "left": 24,
+        "right": 24,
+        "bottom": 16
+      }
+    },
+    "subtitle": {
+      "font_size": 15,
+      "line_height": 20,
+      "type": "text",
+      "paddings": {
+        "left": 24,
+        "right": 24
+      }
+    }
+  },
+
+  "card": {
+    "log_id": "details_card",
+    "states": [
+      {
+        "state_id": 0,
+        "div": {
+          "type": "container",
+          "orientation": "vertical",
+          "margins": {
+            "top": 24,
+            "bottom": 24
+          },
+          "items": [
+            {
+              "type": "text",
+              "text": "╳",
+              "margins": {
+                "top": 10,
+                "right": 0,
+                "bottom": 10,
+                "left": 10
+              },
+              "font_size": 24,
+              "font_weight": "bold",
+              "actions": [
+                {
+                  "log_id": "navigate_back",
+                  "url": "sample-action://back?Closed details"
+                }
+              ]
+            },
+
+            {
+              "type": "image",
+              "image_url": "https://developer.android.com/static/codelabs/basic-android-kotlin-compose-first-program/img/840cee8b164c10b_1920.png",
+              "margins": {
+                "top": 10,
+                "right": 60,
+                "bottom": 30,
+                "left": 60
+              }
+            },
+
+            {
+              "type": "title",
+              "text": "YaTodo v.1"
+            },
+            {
+              "type": "subtitle",
+              "text": "Contact author",
+              "actions": [
+                {
+                  "log_id": "navigate_url",
+                  "url": "sample-action://url?https://t.me/aptemkov"
+                }
+              ],
+              "font_size": 14,
+              "margins": {
+                "bottom": 2
+              },
+              "text_color": "#0000ff",
+              "underline": "single"
+            },
+            {
+              "type": "subtitle",
+              "text": "A simple application to make notes\n\nLibraries used in this application:",
+              "margins": {
+                "bottom": 24
+              }
+            },
+            {
+              "type": "tabs",
+              "height": {
+                "type": "wrap_content"
+              },
+              "tab_title_style": {
+                "animation_type": "slide"
+              },
+              "items": [
+                {
+                  "title": "UI",
+                  "div": {
+                    "type": "tab_container",
+                    "items": [
+                      {
+                        "type": "item_card",
+                        "text": "Jetpack Compose",
+                        "width": {
+                          "type": "match_parent"
+                        },
+                        "margins": {
+                          "bottom": 24
+                        }
+                      },
+                      {
+                        "type": "item_card",
+                        "text": "DivKit",
+                        "width": {
+                          "type": "match_parent"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "title": "DI",
+                  "div": {
+                    "type": "tab_container",
+                    "items": [
+                      {
+                        "type": "item_card",
+                        "text": "Hilt",
+                        "width": {
+                          "type": "match_parent"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "title": "Storage",
+                  "div": {
+                    "type": "tab_container",
+                    "items": [
+                      {
+                        "type": "item_card",
+                        "text": "Room",
+                        "width": {
+                          "type": "match_parent"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "title": "Networking",
+                  "div": {
+                    "type": "tab_container",
+                    "items": [
+                      {
+                        "type": "item_card",
+                        "text": "Retrofit",
+                        "width": {
+                          "type": "match_parent"
+                        },
+                        "margins": {
+                          "bottom": 24
+                        }
+                      },
+                      {
+                        "type": "item_card",
+                        "text": "OkHttp",
+                        "width": {
+                          "type": "match_parent"
+                        },
+                        "margins": {
+                          "bottom": 24
+                        }
+                      },
+                      {
+                        "type": "item_card",
+                        "text": "Coin",
+                        "width": {
+                          "type": "match_parent"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
