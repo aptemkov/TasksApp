@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
@@ -33,10 +35,15 @@ fun RemoveRow(
             .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val removeButtonStateDescription = stringResource(R.string.delete_button)
+        val removeButtonContentDescription = stringResource(id = if (isEnabled) R.string.delete_button_enabled else R.string.delete_button_disabled)
         Icon(
+            modifier = Modifier.semantics {
+                stateDescription = removeButtonStateDescription
+            },
             tint = color,
             painter = painterResource(id = R.drawable.icon_delete),
-            contentDescription = stringResource(R.string.delete_button),
+            contentDescription = removeButtonContentDescription,
         )
         Spacer(modifier = Modifier.width(12.dp))
         Text(

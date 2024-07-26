@@ -12,10 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.app.utils.AppThemesEnum
 import io.github.aptemkov.tasksapp.app.utils.getStringResource
+import io.github.aptemkov.tasksapp.presentation.utils.TEST_TAG_SETTINGS_THEME_ITEM
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @Composable
@@ -24,10 +26,11 @@ fun ThemeRadioButtonLayout(
     onThemeChange: (AppThemesEnum) -> Unit,
 ) {
     Column {
-        AppThemesEnum.entries.forEach {
+        AppThemesEnum.entries.forEachIndexed { index, appThemesEnum ->
             ThemeRadioButton(
-                theme = it,
-                isSelected = it == selectedOption,
+                modifier = Modifier.testTag(TEST_TAG_SETTINGS_THEME_ITEM + index),
+                theme = appThemesEnum,
+                isSelected = appThemesEnum == selectedOption,
                 onClick = { onThemeChange(it) }
             )
         }
@@ -36,13 +39,14 @@ fun ThemeRadioButtonLayout(
 
 @Composable
 fun ThemeRadioButton(
+    modifier: Modifier,
     theme: AppThemesEnum,
     isSelected: Boolean,
     onClick: (AppThemesEnum) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable { onClick(theme) }
     ) {

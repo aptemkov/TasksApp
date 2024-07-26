@@ -11,11 +11,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
+import io.github.aptemkov.tasksapp.presentation.utils.TEST_TAG_TASK_SAVE_BTN
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @Composable
@@ -44,6 +46,7 @@ fun TasksToolbar(
             style = TasksTheme.typography.button,
             color = TasksTheme.colorScheme.blue,
             modifier = Modifier
+                .testTag(TEST_TAG_TASK_SAVE_BTN)
                 .focusable()
                 .clickable {
                     onNewTaskAdd()
