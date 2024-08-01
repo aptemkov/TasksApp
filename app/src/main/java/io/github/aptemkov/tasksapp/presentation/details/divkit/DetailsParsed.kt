@@ -72,6 +72,8 @@ val details = """
                 {
                   "type": "text",
                   "text": "╳",
+                  "description": "Close details",
+                  "hint": "Close details",
                   "margins": {
                     "top": 10,
                     "right": 0,
@@ -90,6 +92,8 @@ val details = """
 
                 {
                   "type": "image",
+                  "hint": "Kotlin logo",
+                  "description": "Kotlin logo",
                   "image_url": "https://developer.android.com/static/codelabs/basic-android-kotlin-compose-first-program/img/840cee8b164c10b_1920.png",
                   "margins": {
                     "top": 10,

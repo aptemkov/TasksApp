@@ -8,7 +8,6 @@ import io.github.aptemkov.tasksapp.R
 import io.github.aptemkov.tasksapp.app.receivers.NetworkBroadcastReceiver
 import io.github.aptemkov.tasksapp.app.providers.ResourceProvider
 import io.github.aptemkov.tasksapp.domain.models.Task
-import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
 import io.github.aptemkov.tasksapp.domain.usecase.ChangeTaskIsDoneUseCase
 import io.github.aptemkov.tasksapp.domain.usecase.GetAllTasksUseCase
 import io.github.aptemkov.tasksapp.domain.usecase.MergeTasksUseCase
@@ -30,7 +29,6 @@ class HomeScreenViewModel @Inject constructor(
     private val getAllTasksUseCase: GetAllTasksUseCase,
     private val changeTaskIsDoneUseCase: ChangeTaskIsDoneUseCase,
     private val mergeTasksUseCase: MergeTasksUseCase,
-    private val repository: TasksRepository,
     private val connectivityReceiver: NetworkBroadcastReceiver,
     private val resourceProvider: ResourceProvider,
 ): ViewModel() {
@@ -50,7 +48,7 @@ class HomeScreenViewModel @Inject constructor(
         observeNetworkChanges()
     }
 
-    private fun loadTasks() {
+    fun loadTasks() {
         scope.launch(Dispatchers.IO) {
             combine(uiState, getAllTasksUseCase.execute()) { homeState, tasks ->
                 homeState.copy(
