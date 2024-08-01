@@ -11,4 +11,19 @@ data class TaskScreenUiState(
     val createdAt: Long = 0L,
     val hasDeadLine: Boolean = false,
     val isDescriptionError: Boolean = false,
+
+    val audioFile: String? = null,
+    val audioDuration: Int = 0,
+    val currentAudioPosition: Int = 0,
+    val isAudioInputOpen: Boolean = false,
+    val isAudioAdded: Boolean = false,
+    val audioPlayerState: AudioPlayerState = AudioPlayerState.NONE
 )
+
+enum class AudioPlayerState {
+    NONE,
+    RECORDING,
+    RECORDED,
+    PLAYING,
+    PAUSED,
+}

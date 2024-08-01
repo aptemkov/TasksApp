@@ -1,5 +1,6 @@
 package io.github.aptemkov.tasksapp.presentation.task
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,8 +23,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.domain.models.Priority
+import io.github.aptemkov.tasksapp.presentation.task.composables.AudioLayout
 import io.github.aptemkov.tasksapp.presentation.task.composables.PriorityBottomSheet
 import io.github.aptemkov.tasksapp.presentation.task.composables.PriorityLayout
 import io.github.aptemkov.tasksapp.presentation.task.composables.RemoveRow
@@ -44,6 +47,14 @@ fun TaskScreen(
     onNewTaskAdd: () -> Unit,
     onRemoveTask: () -> Unit,
     onLoadTask: (String) -> Unit,
+    onChangeIsAudioInputOpen: () -> Unit,
+    onChangeIsAudioAdded: (Boolean) -> Unit,
+    onChangeAudioPlayerPosition: (Float) -> Unit,
+    onStartRecording: () -> Unit,
+    onStopRecording: () -> Unit,
+    onStartPlaying: () -> Unit,
+    onPausePlaying: () -> Unit,
+    onStopPlaying: () -> Unit,
     onBack: () -> Unit,
 ) {
     Scaffold(
@@ -52,7 +63,7 @@ fun TaskScreen(
                 onBack = onBack,
                 onNewTaskAdd = {
                     onNewTaskAdd()
-                    if(uiState.description.isNotBlank()) {
+                    if (uiState.description.isNotBlank()) {
                         onBack()
                     }
                 }
@@ -70,6 +81,14 @@ fun TaskScreen(
             onDeadLineChange = onDeadLineChange,
             onHasDeadLineChange = onHasDeadLineChange,
             onBack = onBack,
+            onChangeIsAudioInputOpen = onChangeIsAudioInputOpen,
+            onChangeIsAudioAdded = onChangeIsAudioAdded,
+            onChangeAudioPlayerPosition = onChangeAudioPlayerPosition,
+            onStartRecording = onStartRecording,
+            onStopRecording = onStopRecording,
+            onStartPlaying = onStartPlaying,
+            onPausePlaying = onPausePlaying,
+            onStopPlaying = onStopPlaying,
         )
     }
 }
@@ -87,7 +106,16 @@ fun TaskScreenContent(
     onDeadLineChange: (Long) -> Unit,
     onHasDeadLineChange: (Boolean) -> Unit,
     onBack: () -> Unit,
+    onChangeIsAudioInputOpen: () -> Unit,
+    onChangeIsAudioAdded: (Boolean) -> Unit,
+    onChangeAudioPlayerPosition: (Float) -> Unit,
+    onStartRecording: () -> Unit,
+    onStopRecording: () -> Unit,
+    onStartPlaying: () -> Unit,
+    onPausePlaying: () -> Unit,
+    onStopPlaying: () -> Unit,
 ) {
+    val context = LocalContext.current
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
     val priorityBottomSheetState = rememberModalBottomSheetState()
@@ -96,12 +124,13 @@ fun TaskScreenContent(
     val isEditingEnabled = tasksScreenArgument !is TasksScreenArgument.TaskDetails
 
     LaunchedEffect(Unit) {
-        if(isTaskLoaded) {
-            val id = tasksScreenArgument.getId()
-            id?.let {
-                onLoadTask(it)
-            }
-        }
+        val id = tasksScreenArgument.getId()
+        onLoadTask(id ?: "0")
+    }
+
+    BackHandler(true) {
+        onStopPlaying()
+        onBack()
     }
 
     Box {
@@ -117,6 +146,21 @@ fun TaskScreenContent(
                 isEditingEnabled = isEditingEnabled,
                 isError = uiState.isDescriptionError,
                 onValueChange = { onDescriptionChange(it) }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            AudioLayout(
+                onChangeIsAudioInputOpen = onChangeIsAudioInputOpen,
+                uiState = uiState,
+                context = context,
+                onStartRecording = onStartRecording,
+                onStopRecording = onStopRecording,
+                onChangeIsAudioAdded = onChangeIsAudioAdded,
+                onChangeAudioPlayerPosition = onChangeAudioPlayerPosition,
+                onStartPlaying = onStartPlaying,
+                onPausePlaying = onPausePlaying,
+                onStopPlaying = onStopPlaying
             )
 
             Spacer(modifier = Modifier.height(12.dp))

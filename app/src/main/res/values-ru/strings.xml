@@ -46,4 +46,10 @@
     <string name="show_hide_completed_tasks_button_disabled">"Показать все "</string>
     <string name="delete_button_enabled">Включена</string>
     <string name="delete_button_disabled">Выключена</string>
+    <string name="add_audio">Добавить аудио</string>
+    <string name="start_recording">Начать запись</string>
+    <string name="stop_recording">Остановить запись</string>
+    <string name="play_audio">Старт</string>
+    <string name="pause_audio">Пауза</string>
+    <string name="stop_audio">Стоп</string>
 </resources>

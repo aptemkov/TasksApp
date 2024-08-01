@@ -45,4 +45,10 @@
     <string name="deadline_status">Deadline status</string>
     <string name="deadline_status_added">Deadline added</string>
     <string name="deadline_status_not_added">Deadline is not added</string>
+    <string name="add_audio">Add audio</string>
+    <string name="start_recording">Start recording</string>
+    <string name="stop_recording">Stop recording</string>
+    <string name="play_audio">Play</string>
+    <string name="pause_audio">Pause playing</string>
+    <string name="stop_audio">Stop playing</string>
 </resources>

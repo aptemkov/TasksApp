@@ -62,7 +62,15 @@ private fun TaskRouteDestination(
         onPriorityChange = viewModel::changePriority,
         onDeadLineChange = viewModel::changeDeadLine,
         onHasDeadLineChange = viewModel::changeHasDeadLine,
-        onBack = navController::navigateUp
+        onBack = navController::navigateUp,
+        onChangeIsAudioInputOpen = viewModel::changeIsAudioInputOpen,
+        onChangeIsAudioAdded = viewModel::changeIsAudioAdded,
+        onChangeAudioPlayerPosition = viewModel::changeAudioPlayerPosition,
+        onStartRecording = viewModel::onStartRecording,
+        onStopRecording = viewModel::onStopRecording,
+        onStartPlaying = viewModel::onStartPlaying,
+        onPausePlaying = viewModel::onPausePlaying,
+        onStopPlaying = viewModel::onStopPlaying,
     )
 }
 

@@ -1,12 +1,14 @@
 package io.github.aptemkov.tasksapp.presentation.task
 
+import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.aptemkov.tasksapp.domain.audio.AudioPlayer
+import io.github.aptemkov.tasksapp.domain.audio.AudioRecorder
 import io.github.aptemkov.tasksapp.domain.models.Priority
 import io.github.aptemkov.tasksapp.domain.models.Task
-import io.github.aptemkov.tasksapp.domain.repository.TasksRepository
 import io.github.aptemkov.tasksapp.domain.usecase.AddTaskUseCase
 import io.github.aptemkov.tasksapp.domain.usecase.GetTaskByIdUseCase
 import io.github.aptemkov.tasksapp.domain.usecase.RemoveTaskByIdUseCase
@@ -21,14 +23,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskScreenViewModel @Inject constructor(
-    private val repository: TasksRepository,
     private val removeTaskByIdUseCase: RemoveTaskByIdUseCase,
     private val getTaskByIdUseCase: GetTaskByIdUseCase,
     private val addTaskUseCase: AddTaskUseCase,
+    private val audioPlayer: AudioPlayer,
+    private val audioRecorder: AudioRecorder,
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(TaskScreenUiState())
     val uiState = _uiState.asStateFlow()
+
     private val scope = viewModelScope + CoroutineExceptionHandler { coroutineContext, throwable ->
         Log.e("TaskScreenVM", throwable.stackTrace.toString())
     }
@@ -44,9 +48,8 @@ class TaskScreenViewModel @Inject constructor(
     }
 
     private fun addTask() {
-        val id = uiState.value.id
         val task = Task(
-            id = if (id != "0") id else "${UUID.randomUUID()}",
+            id = uiState.value.id,
             description = uiState.value.description,
             priority = uiState.value.priority,
             deadline = uiState.value.deadLine,
@@ -55,21 +58,25 @@ class TaskScreenViewModel @Inject constructor(
             editDate = System.currentTimeMillis(),
         )
         scope.launch(Dispatchers.IO) {
-            //repository.addTask(task)
             addTaskUseCase.execute(task)
         }
     }
 
     fun removeTask() {
         scope.launch(Dispatchers.IO) {
-            //repository.removeTaskById(uiState.value.id)
             removeTaskByIdUseCase.execute(uiState.value.id)
         }
     }
 
     fun loadTask(id: String) {
         scope.launch(Dispatchers.IO) {
-            //val task = repository.getTaskById(id).getOrNull()
+            if(id == "0") {
+                _uiState.value = uiState.value.copy(
+                    id = UUID.randomUUID().toString()
+                )
+                return@launch
+            }
+
             val task = getTaskByIdUseCase.execute(id).getOrNull()
             task?.let {
                 _uiState.value = uiState.value.copy(
@@ -111,6 +118,95 @@ class TaskScreenViewModel @Inject constructor(
         if(!hasDeadLine) {
             changeDeadLine(0L)
         }
+    }
+
+    fun changeIsAudioInputOpen() {
+        _uiState.value = uiState.value.copy(
+            isAudioInputOpen = uiState.value.isAudioInputOpen.not()
+        )
+    }
+
+    fun changeIsAudioAdded(isAdded: Boolean) {
+        _uiState.value = uiState.value.copy(
+            isAudioAdded = isAdded
+        )
+    }
+
+    fun changeAudioPlayerPosition(position: Float) {
+        audioPlayer.changePosition(position.toInt())
+    }
+
+    fun onStartRecording() {
+        val fileName = uiState.value.id
+        audioRecorder.start(fileName)
+        _uiState.value = uiState.value.copy(
+            audioPlayerState = AudioPlayerState.RECORDING,
+            audioFile = fileName
+        )
+    }
+
+    fun onStopRecording() {
+        audioRecorder.stop()
+        audioPlayer.startPlayer(uiState.value.id)
+        _uiState.value = uiState.value.copy(
+            audioPlayerState = AudioPlayerState.RECORDED,
+            isAudioAdded = true
+        )
+        getCurrentAudioPosition()
+    }
+
+    private fun getCurrentAudioPosition() {
+
+        _uiState.value = uiState.value.copy(
+            audioDuration = audioPlayer.getDuration(),
+        )
+
+        val handler = Handler()
+        handler.postDelayed(
+            object : Runnable {
+                override fun run() {
+                    try {
+                        val currentPosition = audioPlayer.getCurrentPosition().toFloat()
+
+                        _uiState.value = uiState.value.copy(
+                            currentAudioPosition = currentPosition.toInt(),
+                            audioDuration = audioPlayer.getDuration(),
+                        )
+
+                        handler.postDelayed(this, 500L)
+                    } catch (e: Exception) {
+                        _uiState.value = uiState.value.copy(
+                            currentAudioPosition = 0,
+                            audioDuration = audioPlayer.getDuration(),
+                        )
+                    }
+                }
+            },
+            0
+        )
+    }
+
+    fun onStartPlaying() {
+        uiState.value.audioFile?.let {
+            audioPlayer.playFile(it)
+        }
+        _uiState.value = uiState.value.copy(
+            audioPlayerState = AudioPlayerState.PLAYING,
+        )
+    }
+
+    fun onPausePlaying() {
+        audioPlayer.pause()
+        _uiState.value = uiState.value.copy(
+            audioPlayerState = AudioPlayerState.PAUSED,
+        )
+    }
+
+    fun onStopPlaying() {
+        audioPlayer.stop()
+        _uiState.value = uiState.value.copy(
+            audioPlayerState = AudioPlayerState.NONE,
+        )
     }
 
 }
