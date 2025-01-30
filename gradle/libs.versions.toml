@@ -1,7 +1,10 @@
 [versions]
 agp = "8.5.0"
+hiltAndroidCompiler = "2.51.1"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
+mockito = "5.4.0"
+mockk = "1.13.12"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -21,11 +24,17 @@ retrofit = "2.11.0"
 workManager = "2.9.0"
 hiltCommon = "1.2.0"
 ktor = "2.3.7"
+div = "30.9.0"
 
 [libraries]
 agp = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+mockk-agent = { group = "io.mockk", name = "mockk-agent", version.ref = "mockk" }
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -55,18 +64,27 @@ dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = 
 dagger-main = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation" }
 androidx-hilt-common = { group = "androidx.hilt", name = "hilt-common", version.ref = "hiltCommon" }
+hilt-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "dagger" }
 
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 ktor-client = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+
+
+yandex-div = { group = "com.yandex.div", name = "div", version.ref = "div" }
+yandex-div-core = { group = "com.yandex.div", name = "div-core", version.ref = "div" }
+yandex-div-json = { group = "com.yandex.div", name = "div-json", version.ref = "div" }
+yandex-div-picasso = { group = "com.yandex.div", name = "picasso", version.ref = "div" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

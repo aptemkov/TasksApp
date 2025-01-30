@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Ya.Todo</string>
     <string name="completed_tasks_description">Completed - %1$s</string>
-    <string name="show_hide_completed_tasks_button">Show/hide completed tasks</string>
+    <string name="show_hide_completed_tasks_button">List type:</string>
     <string name="my_tasks_title">My tasks</string>
     <string name="new_task">New task</string>
     <string name="close_button">Close button</string>
@@ -11,14 +11,14 @@
     <string name="priority_default">Default</string>
     <string name="priority_high">Hight</string>
     <string name="enter_description_placeholder">Describe task</string>
-    <string name="priority">Priority</string>
+    <string name="priority">Task priority is</string>
     <string name="deadline_text">Deadline</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="delete_button">Delete button</string>
     <string name="remove">Remove</string>
     <string name="details">Details</string>
-    <string name="is_task_done">Is task done</string>
+    <string name="is_task_done">Task completion status</string>
     <string name="deadline_till">Till %1$s</string>
     <string name="text_field_error">Text field error</string>
     <string name="connected_to_internet">Connected to the Internet</string>
@@ -29,4 +29,21 @@
     <string name="error_editing_task">Editing task exception,  %1$s</string>
     <string name="error_editing_tasks_list">Editing tasks exception,  %1$s</string>
     <string name="error_deleting_task">Deleting task exception,  %1$s</string>
+    <string name="settings_title">Settings</string>
+    <string name="app_theme">App theme</string>
+    <string name="app_theme_dark">Dark</string>
+    <string name="app_theme_light">Light</string>
+    <string name="app_theme_system">System</string>
+    <string name="about_this_app">About this app</string>
+    <string name="selected_priority_animation">Selected priority animation</string>
+    <string name="task_completion_status">Task completion status</string>
+    <string name="task_completion_status_yes">Task is done</string>
+    <string name="task_completion_status_no">Task is not done</string>
+    <string name="deadline_status">Deadline status</string>
+    <string name="deadline_status_added">Deadline added</string>
+    <string name="deadline_status_not_added">Deadline is not added</string>
+    <string name="show_hide_completed_tasks_button_enabled">Show only not completed tasks</string>
+    <string name="show_hide_completed_tasks_button_disabled">Show all tasks</string>
+    <string name="delete_button_enabled">Enabled</string>
+    <string name="delete_button_disabled">Disabled</string>
 </resources>

@@ -13,10 +13,12 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.R
+import io.github.aptemkov.tasksapp.presentation.utils.*
 import io.github.aptemkov.tasksapp.ui.theme.TasksTheme
 
 @Composable
@@ -36,6 +38,7 @@ fun TasksTextField(
             shape = CardDefaults.shape,
             readOnly = !isEditingEnabled,
             modifier = Modifier
+                .testTag(TEST_TAG_TASK_TEXT_FIELD)
                 .fillMaxWidth()
                 .heightIn(min = 104.dp, max = 300.dp),
             value = description,
@@ -58,6 +61,7 @@ fun TasksTextField(
             trailingIcon = {
                 if(isError) {
                     Icon(
+                        modifier = Modifier.testTag(TEST_TAG_TASK_TEXT_FIELD_WARNING_ICON),
                         imageVector =  Icons.Filled.Warning,
                         contentDescription = stringResource(R.string.text_field_error),
                         tint = TasksTheme.colorScheme.red

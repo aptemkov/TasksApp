@@ -17,6 +17,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.aptemkov.tasksapp.domain.models.Priority
@@ -37,6 +41,7 @@ fun HomeScreen(
     onChangeTaskIsDone: (Task, Boolean) -> Unit,
     onNewTaskClick: () -> Unit,
     onDetailsClick: (String) -> Unit,
+    onSettingsClick: () -> Unit,
 ) {
     val context = LocalContext.current
     val scrollBehavior =
@@ -51,14 +56,24 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             HomeScreenCollapsingToolBar(
+                modifier = Modifier.semantics {
+                    traversalIndex = -1f
+                },
                 scrollBehavior = scrollBehavior,
                 completedTasksNumber = uiState.completedTasksNumber,
                 showCompletedTasks = uiState.showCompletedTasks,
+                onSettingsClick = onSettingsClick,
                 changeVisibility = changeVisibility
             )
         },
         floatingActionButton = {
-            HomeFab(onNewTaskClick)
+            HomeFab(
+                modifier = Modifier.semantics {
+                    role = Role.Button
+                    traversalIndex = 0f
+                },
+                onNewTaskClick = onNewTaskClick
+            )
         },
         containerColor = TasksTheme.colorScheme.backPrimary,
         modifier = Modifier
@@ -66,7 +81,7 @@ fun HomeScreen(
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
         HomeScreenContent(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(innerPadding).semantics { traversalIndex = 1f },
             tasksList = uiState.tasksListFiltered,
             onItemClick = onItemClick,
             onNewTaskClick = onNewTaskClick,
@@ -133,6 +148,7 @@ private fun LightHomeScreenPreview() {
             onItemClick = {},
             onChangeTaskIsDone = { str, bool ->},
             onNewTaskClick = { },
+            onSettingsClick = {},
             onDetailsClick = {}
         )
     }
@@ -159,6 +175,7 @@ private fun DarkHomeScreenPreview() {
             onItemClick = {},
             onChangeTaskIsDone = { str, bool ->},
             onNewTaskClick = { },
+            onSettingsClick = {},
             onDetailsClick = {}
         )
     }

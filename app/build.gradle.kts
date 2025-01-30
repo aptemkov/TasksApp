@@ -33,7 +33,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "io.github.aptemkov.tasksapp.di.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -92,6 +92,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.hilt.common)
     testImplementation(libs.junit)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.mockk.agent)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -101,7 +104,15 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.dagger.hilt.android)
+    androidTestImplementation(libs.hilt.testing)
     kapt(libs.dagger.hilt.compiler)
+    
+    kaptTest(libs.dagger.hilt.compiler)
+    kaptTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.hilt.testing)
+    kaptAndroidTest(libs.hilt.android.compiler)
+    androidTestAnnotationProcessor(libs.hilt.android.compiler)
+
     implementation(libs.lifecycle.compose)
     implementation(libs.hilt.navigation)
     implementation(libs.work.manager)
@@ -111,7 +122,12 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.test)
     implementation(libs.kotlinx.coroutines.android)
     api(libs.okhttp)
+    implementation(libs.yandex.div)
+    implementation(libs.yandex.div.core)
+    implementation(libs.yandex.div.json)
+    implementation(libs.yandex.div.picasso)
 
 }

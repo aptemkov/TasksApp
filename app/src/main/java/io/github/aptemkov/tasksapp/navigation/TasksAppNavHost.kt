@@ -9,8 +9,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import io.github.aptemkov.tasksapp.presentation.details.DetailScreen
 import io.github.aptemkov.tasksapp.presentation.home.HomeScreen
 import io.github.aptemkov.tasksapp.presentation.home.HomeScreenViewModel
+import io.github.aptemkov.tasksapp.presentation.settings.SettingsScreen
+import io.github.aptemkov.tasksapp.presentation.settings.SettingsViewModel
 import io.github.aptemkov.tasksapp.presentation.task.TaskScreen
 import io.github.aptemkov.tasksapp.presentation.task.TaskScreenViewModel
 import io.github.aptemkov.tasksapp.presentation.task.getTaskScreenArgument
@@ -27,6 +30,14 @@ fun TasksAppNavHost(navController: NavHostController) {
 
         composable<TaskRoute> {
             TaskRouteDestination(it, navController)
+        }
+
+        composable<SettingsRoute> {
+            SettingsRouteDestination(navController)
+        }
+
+        composable<DetailsRoute> {
+            DetailsRouteDestination(navController)
         }
     }
 }
@@ -75,5 +86,31 @@ private fun HomeRouteDestination(navController: NavHostController) {
         },
         onChangeTaskIsDone = viewModel::changeTaskIsDone,
         changeVisibility = viewModel::changeVisibility,
+        onSettingsClick = {
+            navController.navigate(SettingsRoute)
+        }
+    )
+}
+
+@Composable
+private fun SettingsRouteDestination(navController: NavHostController) {
+    val viewModel: SettingsViewModel = hiltViewModel()
+    val selectedTheme by viewModel.selectedTheme.collectAsStateWithLifecycle()
+
+    SettingsScreen(
+        selectedTheme = selectedTheme,
+        onThemeChange = viewModel::selectTheme,
+        onBack = { navController.navigateUp() },
+        onDetails = { navController.navigate(DetailsRoute) }
+    )
+}
+
+@Composable
+private fun DetailsRouteDestination(navController: NavHostController) {
+
+    DetailScreen(
+        onClose = {
+            navController.navigateUp()
+        }
     )
 }
